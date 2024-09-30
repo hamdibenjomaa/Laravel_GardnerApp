@@ -1,3 +1,3 @@
-@extends('backOffice.template')
+@extends('frontOffice.template')
 
 

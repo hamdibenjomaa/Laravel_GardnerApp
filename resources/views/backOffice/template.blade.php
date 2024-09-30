@@ -43,8 +43,15 @@
                         </span>
                             <span class="hide-menu">Blogs</span>
                         </a>
-                    </li>
-                 
+                        <li class="sidebar-item">
+    <a class="sidebar-link" href="{{ url('/inscrits') }}" aria-expanded="false">
+        <span>
+            <i class="ti ti-list"></i> <!-- You can change the icon to any suitable one -->
+        </span>
+        <span class="hide-menu">Inscriptions</span>
+    </a>
+</li>
+
                     <li class="sidebar-item">
      <a class="sidebar-link" href="{{ route('formations.index') }}" aria-expanded="false">
         <span>
@@ -129,6 +136,7 @@
         <!--  Header End -->
         <div class="container-fluid">
             @yield('content') <!-- Add this line to yield the content from create.blade.php -->
+         
             <div class="py-6 px-6 text-center fixed-bottom">
                 <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
             </div>

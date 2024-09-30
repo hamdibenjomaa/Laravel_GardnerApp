@@ -75,4 +75,19 @@ class FormationController extends Controller
         $formation->delete();
         return redirect()->route('formations.index')->with('success', 'Formation deleted successfully.');
     }
+    public function frontofficeIndex()
+    {
+        $formations = Formation::all(); // Get all formations
+        return view('frontOffice.formations.index', compact('formations'));
+    }
+    
+// app/Http/Controllers/FormationController.php
+
+public function showformation($id)
+{
+    $formation = Formation::findOrFail($id); // Retrieve the formation or throw a 404 error
+    return view('frontOffice.formations.formation', compact('formation'));
+}
+
+
 }

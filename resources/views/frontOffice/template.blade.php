@@ -55,7 +55,10 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">Blog</a>
-                <a href="service.html" class="nav-item nav-link">Formation</a>
+                <a href="{{ route('forms') }}" class="nav-item nav-link">Formation</a>
+
+
+
                 <a href="project.html" class="nav-item nav-link">Nos Partenaires</a>
                 <a href="project.html" class="nav-item nav-link">Evenements</a>
                 <a href="project.html" class="nav-item nav-link">Nos Equipes</a>
@@ -161,7 +164,7 @@
     </div>
     <!-- Top Feature End -->
 
-
+    @yield('content')
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
