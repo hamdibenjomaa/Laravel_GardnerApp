@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontOffice.home');
 });
 
 Route::get('/Admin', function () {
@@ -27,6 +28,9 @@ Route::get('/updateBlog{id}', [BlogController::class, 'edit'])->name('blogs.edit
 Route::put('/edit/{id}', [BlogController::class, 'update'])->name('blogs.update');
 
 
+Route::post('/blogs/{blog}/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::put('/blogs/{blog}/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+Route::delete('/blogs/{blog}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 
 Route::middleware([
