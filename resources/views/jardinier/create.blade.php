@@ -5,24 +5,24 @@
         <input type="text" id="nom" name="nom" class="form-control" required>
     </div>
     <div class="form-group">
-        <label for="nom">prenom du jardinier</label>
-        <input type="text" id="nom" name="nom" class="form-control" required>
+        <label for="prenom">prenom du jardinier</label>
+        <input type="text" id="prenom" name="prenom" class="form-control" required>
     </div>
     <div class="form-group">
-        <label for="nom">tel du jardinier</label>
-        <input type="text" id="nom" name="nom" class="form-control" required>
+        <label for="telephone">tel du jardinier</label>
+        <input type="text" id="telephone" name="telephone" class="form-control" required>
     </div>
     <div class="form-group">
-        <label for="nom">localisation</label>
-        <input type="text" id="nom" name="nom" class="form-control" required>
+        <label for="localisation">localisation</label>
+        <input type="text" id="localisation" name="localisation" class="form-control" >
     </div>
     <div class="form-group">
-        <label for="nom">horaire</label>
-        <input type="text" id="nom" name="nom" class="form-control" required>
+        <label for="horaire">horaire</label>
+        <input type="text" id="horaire" name="horaire" class="form-control" >
     </div>
     <div class="form-group">
-        <label for="nom">cout</label>
-        <input type="text" id="nom" name="nom" class="form-control" required>
+        <label for="cout">cout</label>
+        <input type="text" id="cout" name="cout" class="form-control" >
     </div>
 
 

@@ -8,9 +8,13 @@ Route::get('/', function () {
 });
 
 Route::get('/jardinier', [JardinierController::class,'index'])->name('jardinier.index');
-Route::get('/jardinier/create', [JardinierController::class,'create']);
+Route::get('/jardinier/create', [JardinierController::class,'create'])->name('jardinier.create');
 Route::post('/jardinier/store', [JardinierController::class,'store'])->name('jardinier.store');
+Route::get('/jardinier/edit/{id}', [JardinierController::class,'edit'])->name('jardinier.edit');
+Route::post('/jardinier/update/{id}', [JardinierController::class,'update'])->name('jardinier.update');
 Route::delete('/jardinier/delete/{id}', [JardinierController::class,'destroy'])->name('jardinier.destroy');
+Route::get('/jardinier/show/{id}', [JardinierController::class,'show'])->name('jardinier.show');
+
 
 Route::middleware([
     'auth:sanctum',
