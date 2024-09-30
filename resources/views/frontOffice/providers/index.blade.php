@@ -125,9 +125,13 @@
         <div class="row g-4">
             @foreach($providers as $provider)
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ 0.1 + ($loop->index * 0.2) }}s">
-                    <div class="service-item rounded d-flex h-100">
+                    <div class="service-item rounded d-flex flex-column h-100">
                         <div class="service-img rounded">
-                            <img class="img-fluid" src="img/service-{{ $loop->index + 1 }}.jpg" alt="">
+                            @if($provider->photo)
+                                <img class="img-fluid" src="{{ Storage::url($provider->photo) }}" alt="{{ $provider->name }}">
+                            @else
+                                <img class="img-fluid" src="img/default-provider.jpg" alt="Default Image">
+                            @endif
                         </div>
                         <div class="service-text rounded p-5">
                             <div class="btn-square rounded-circle mx-auto mb-3">
@@ -139,19 +143,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-3">
-                    <h5>Items offered by {{ $provider->name }}:</h5>
-                    <ul>
-                        @foreach($provider->items as $item)
-                            <li>{{ $item->name }} - ${{ $item->cost }}</li>
-                        @endforeach
-                    </ul>
-                </div>
             @endforeach
         </div>
     </div>
 </div>
 <!-- Service End -->
+
 
 
 

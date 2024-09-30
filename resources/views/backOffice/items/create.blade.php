@@ -7,7 +7,7 @@
     <title>Add New Item</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}">
 </head>
 
 <body>
@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <a class="sidebar-link active" href="{{ route('backOffice.providers.home') }} " aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -136,7 +136,7 @@
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
 
-                    <form action="{{ route('items.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('backOffice.items.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Item Name</label>

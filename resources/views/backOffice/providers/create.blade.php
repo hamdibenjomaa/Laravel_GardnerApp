@@ -4,11 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Item</title>
+    <title>Add New Item</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-  
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}">
 
 
 </head>
@@ -61,7 +59,7 @@
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
-                                <span class="hide-menu">Partenaires</span>
+                                <span class="hide-menu ac">Partenaires</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -133,51 +131,57 @@
 
             <div class="container-fluid">
                 <div class="container">
-                    <h1>Edit Item</h1>
+                <h1>Add New Provider</h1>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-                    <form action="{{ route('backOffice.items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name', $item->name) }}" required>
-                        </div>
+<form action="{{ route('backOffice.providers.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
 
-                        <div class="mb-3">
-                            <label for="cost" class="form-label">Cost</label>
-                            <input type="number" name="cost" class="form-control" value="{{ old('cost', $item->cost) }}" required>
-                        </div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Provider Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
 
-                        <div class="mb-3">
-                            <label for="provider_id" class="form-label">Provider</label>
-                            <select name="provider_id" class="form-select" required>
-                                @foreach ($providers as $provider)
-                                    <option value="{{ $provider->id }}" {{ $provider->id == $item->provider_id ? 'selected' : '' }}>
-                                        {{ $provider->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
 
-                        <div class="mb-3">
-                            <label for="photo" class="form-label">Photo</label>
-                            <input type="file" name="photo" class="form-control">
-                        </div>
+    <div class="mb-3">
+        <label for="phone_number" class="form-label">Phone Number</label>
+        <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+    </div>
 
-                        <button type="submit" class="btn btn-primary">Update Item</button>
-                        <a href="{{ route('backOffice.items.index') }}" class="btn btn-secondary">Cancel</a>
-                    </form>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <input type="text" class="form-control" id="address" name="address" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="photo" class="form-label">Photo</label>
+        <input type="file" class="form-control" id="photo" name="photo">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Provider</button>
+</form>
                 </div>
 
                 <div class="py-6 px-6 text-center fixed-bottom">
@@ -187,14 +191,15 @@
         </div>
     </div>
 
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
-<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
-<script src="{{ asset('assets/js/dashboard.js') }}"></script>
+ 
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/sidebarmenu.js"></script>
+    <script src="../assets/js/app.min.js"></script>
+    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
 
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 </body>
 
 </html>

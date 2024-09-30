@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Provider extends Model
 {
-    protected $fillable = ['name', 'email', 'phone_number', 'address' ,'description',];
+    protected $fillable = ['name', 'email', 'phone_number', 'address' ,'description', 'photo'];
 
     public function items()
     {

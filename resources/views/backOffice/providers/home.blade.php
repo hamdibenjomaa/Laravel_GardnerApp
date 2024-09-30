@@ -4,13 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Item</title>
+    <title>Items List</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-  
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css'>
 
-
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
 </head>
 
 <body>
@@ -57,7 +58,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                        <a class="sidebar-link active" href="{{ route('backOffice.providers.home') }} " aria-expanded="false">
+                            <a class="sidebar-link active" href="{{ route('backOffice.providers.home') }} " aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -132,69 +133,113 @@
             <!--  Header End -->
 
             <div class="container-fluid">
-                <div class="container">
-                    <h1>Edit Item</h1>
+  <div class="containerr">
+    <div class="grid">
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+      <!-- Card 1 -->
+      <a href="{{ route('backOffice.items.index') }}" class="card">
+        <span class="icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14.5 3.5C14.5 3.5 14.5 5.5 12 5.5C9.5 5.5 9.5 3.5 9.5 3.5H7.5L4.20711 6.79289C3.81658 7.18342 3.81658 7.81658 4.20711 8.20711L6.5 10.5V20.5H17.5V10.5L19.7929 8.20711C20.1834 7.81658 20.1834 7.18342 19.7929 6.79289L16.5 3.5H14.5Z"
+            />
+          </svg>
+        </span>
+        <h4>Products</h4>
+        <p>Update and manage your products</p>
+        <div class="shine"></div>
+        <div class="background">
+          <div class="tiles">
+            <div class="tile tile-1"></div>
+            <div class="tile tile-2"></div>
+            <div class="tile tile-3"></div>
+            <div class="tile tile-4"></div>
+            <div class="tile tile-5"></div>
+            <div class="tile tile-6"></div>
+            <div class="tile tile-7"></div>
+            <div class="tile tile-8"></div>
+            <div class="tile tile-9"></div>
+            <div class="tile tile-10"></div>
+          </div>
+          <div class="line line-1"></div>
+          <div class="line line-2"></div>
+          <div class="line line-3"></div>
+        </div>
+      </a>
 
-                    <form action="{{ route('backOffice.items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+      <!-- Card 2 -->
+      <a href="{{ route('backOffice.providers.index') }}" class="card">
+        <span class="icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.5 9.5V5.5C4.5 4.94772 4.94772 4.5 5.5 4.5H9.5C10.0523 4.5 10.5 4.94772 10.5 5.5V9.5C10.5 10.0523 10.0523 10.5 9.5 10.5H5.5C4.94772 10.5 4.5 10.0523 4.5 9.5Z"
+            />
+            <path
+              d="M13.5 18.5V14.5C13.5 13.9477 13.9477 13.5 14.5 13.5H18.5C19.0523 13.5 19.5 13.9477 19.5 14.5V18.5C19.5 19.0523 19.0523 19.5 18.5 19.5H14.5C13.9477 19.5 13.5 19.0523 13.5 18.5Z"
+            />
+            <path d="M4.5 19.5L7.5 13.5L10.5 19.5H4.5Z" />
+            <path
+              d="M16.5 4.5C18.1569 4.5 19.5 5.84315 19.5 7.5C19.5 9.15685 18.1569 10.5 16.5 10.5C14.8431 10.5 13.5 9.15685 13.5 7.5C13.5 5.84315 14.8431 4.5 16.5 4.5Z"
+            />
+          </svg>
+        </span>
+        <h4>Providers</h4>
+        <p>Update and manage your providers</p>
+        <div class="shine"></div>
+        <div class="background">
+          <div class="tiles">
+            <div class="tile tile-1"></div>
+            <div class="tile tile-2"></div>
+            <div class="tile tile-3"></div>
+            <div class="tile tile-4"></div>
+            <div class="tile tile-5"></div>
+            <div class="tile tile-6"></div>
+            <div class="tile tile-7"></div>
+            <div class="tile tile-8"></div>
+            <div class="tile tile-9"></div>
+            <div class="tile tile-10"></div>
+          </div>
+          <div class="line line-1"></div>
+          <div class="line line-2"></div>
+          <div class="line line-3"></div>
+        </div>
+      </a>
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name', $item->name) }}" required>
-                        </div>
+    </div>
+  </div>
 
-                        <div class="mb-3">
-                            <label for="cost" class="form-label">Cost</label>
-                            <input type="number" name="cost" class="form-control" value="{{ old('cost', $item->cost) }}" required>
-                        </div>
+  <div class="py-6 px-6 text-center fixed-bottom">
+    <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
+  </div>
+</div>
 
-                        <div class="mb-3">
-                            <label for="provider_id" class="form-label">Provider</label>
-                            <select name="provider_id" class="form-select" required>
-                                @foreach ($providers as $provider)
-                                    <option value="{{ $provider->id }}" {{ $provider->id == $item->provider_id ? 'selected' : '' }}>
-                                        {{ $provider->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="photo" class="form-label">Photo</label>
-                            <input type="file" name="photo" class="form-control">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Update Item</button>
-                        <a href="{{ route('backOffice.items.index') }}" class="btn btn-secondary">Cancel</a>
-                    </form>
-                </div>
-
-                <div class="py-6 px-6 text-center fixed-bottom">
-                    <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
-                </div>
-            </div>
         </div>
     </div>
 
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
-<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
-<script src="{{ asset('assets/js/dashboard.js') }}"></script>
-
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/sidebarmenu.js"></script>
+    <script src="../assets/js/app.min.js"></script>
+    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
+<script src="{{ asset('js/home.js') }}"></script>
 </body>
 
 </html>

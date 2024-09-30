@@ -4,13 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Item</title>
+    <title>Items List</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-  
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
-
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
 
 <body>
@@ -133,68 +130,53 @@
 
             <div class="container-fluid">
                 <div class="container">
-                    <h1>Edit Item</h1>
+                <h1>Providers List</h1>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-                    <form action="{{ route('backOffice.items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name', $item->name) }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="cost" class="form-label">Cost</label>
-                            <input type="number" name="cost" class="form-control" value="{{ old('cost', $item->cost) }}" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="provider_id" class="form-label">Provider</label>
-                            <select name="provider_id" class="form-select" required>
-                                @foreach ($providers as $provider)
-                                    <option value="{{ $provider->id }}" {{ $provider->id == $item->provider_id ? 'selected' : '' }}>
-                                        {{ $provider->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="photo" class="form-label">Photo</label>
-                            <input type="file" name="photo" class="form-control">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Update Item</button>
-                        <a href="{{ route('backOffice.items.index') }}" class="btn btn-secondary">Cancel</a>
-                    </form>
+<div class="row">
+    @foreach ($providers as $provider)
+        <div class="col-md-4">
+            <div class="card mb-4">
+                @if ($provider->photo)
+                    <img src="{{ asset('storage/' . $provider->photo) }}" class="card-img-top" alt="Provider Photo">
+                @else
+                    <img src="../assets/images/default-provider.png" class="card-img-top" alt="Default Provider Photo">
+                @endif
+                <div class="card-body">
+                    <h5 class="card-title">{{ $provider->name }}</h5>
+                    <p class="card-text">{{ Str::limit($provider->description, 100) }}</p>
+                    <a href="{{ route('backOffice.providers.edit', $provider->id) }}" class="btn btn-warning">Update</a>
+                    <form action="{{ route('backOffice.providers.destroy', $provider->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
+                                        </form>
                 </div>
+            </div>
+        </div>
+    @endforeach
+</div>
 
-                <div class="py-6 px-6 text-center fixed-bottom">
-                    <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
+<a href="{{ route('backOffice.providers.create') }}" class="btn btn-primary">Add New Provider</a>
+</div>
+
+<div class="py-6 px-6 text-center fixed-bottom">
+<p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
-<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
-<script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
-<script src="{{ asset('assets/js/dashboard.js') }}"></script>
-
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/sidebarmenu.js"></script>
+    <script src="../assets/js/app.min.js"></script>
+    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="../assets/js/dashboard.js"></script>
 </body>
 
 </html>

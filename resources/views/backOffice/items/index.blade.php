@@ -54,7 +54,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <a class="sidebar-link active" href="{{ route('backOffice.providers.home') }} " aria-expanded="false">
                                 <span>
                                     <i class="ti ti-layout-dashboard"></i>
                                 </span>
@@ -139,7 +139,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                             
                                 <th>Name</th>
                                 <th>Cost</th>
                                 <th>Provider</th>
@@ -150,7 +150,7 @@
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
+                           
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->cost }}</td>
                                     <td>{{ $item->provider->name }}</td>

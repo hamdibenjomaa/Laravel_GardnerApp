@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit Item</title>
+    <title>Edit provider</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -133,7 +133,7 @@
 
             <div class="container-fluid">
                 <div class="container">
-                    <h1>Edit Item</h1>
+                    <h1>Edit provider</h1>
 
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -145,39 +145,46 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('backOffice.items.update', $item->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+                    <form action="{{ route('backOffice.providers.update', $provider->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name', $item->name) }}" required>
-                        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" value="{{ $provider->name }}" class="form-control" required>
+        </div>
 
-                        <div class="mb-3">
-                            <label for="cost" class="form-label">Cost</label>
-                            <input type="number" name="cost" class="form-control" value="{{ old('cost', $item->cost) }}" required>
-                        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" value="{{ $provider->email }}" class="form-control" required>
+        </div>
 
-                        <div class="mb-3">
-                            <label for="provider_id" class="form-label">Provider</label>
-                            <select name="provider_id" class="form-select" required>
-                                @foreach ($providers as $provider)
-                                    <option value="{{ $provider->id }}" {{ $provider->id == $item->provider_id ? 'selected' : '' }}>
-                                        {{ $provider->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="text" name="phone_number" value="{{ $provider->phone_number }}" class="form-control" required>
+        </div>
 
-                        <div class="mb-3">
-                            <label for="photo" class="form-label">Photo</label>
-                            <input type="file" name="photo" class="form-control">
-                        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" name="address" value="{{ $provider->address }}" class="form-control" required>
+        </div>
 
-                        <button type="submit" class="btn btn-primary">Update Item</button>
-                        <a href="{{ route('backOffice.items.index') }}" class="btn btn-secondary">Cancel</a>
-                    </form>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control">{{ $provider->description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="photo">Photo</label>
+            <input type="file" name="photo" class="form-control">
+     
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Provider</button>
+        <a href="{{ route('backOffice.providers.index') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+
+
                 </div>
 
                 <div class="py-6 px-6 text-center fixed-bottom">

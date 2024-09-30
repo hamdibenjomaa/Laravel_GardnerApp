@@ -12,8 +12,8 @@ class ItemController extends Controller
 {
     public function create()
     {
-        $providers = Provider::all(); // Fetch all providers from the database
-        return view('backOffice.items.create', compact('providers')); // Pass the providers to the view
+        $providers = Provider::all(); 
+        return view('backOffice.items.create', compact('providers')); 
     }
 
     public function store(Request $request)
@@ -22,7 +22,7 @@ class ItemController extends Controller
             'name' => 'required|string|max:255',
             'cost' => 'required|numeric',
             'provider_id' => 'required|exists:providers,id',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the photo
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', 
         ]);
 
         $item = new Item();
@@ -31,8 +31,8 @@ class ItemController extends Controller
         $item->provider_id = $request->provider_id;
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('photos', 'public'); // Store the photo
-            $item->photo = $path; // Save the path to the database
+            $path = $request->file('photo')->store('photos', 'public'); 
+            $item->photo = $path; 
         }
 
         $item->save();
@@ -41,15 +41,15 @@ class ItemController extends Controller
     }
     public function index()
     {
-        $items = Item::with('provider')->get(); // Fetch all items with their associated providers
-        return view('backOffice.items.index', compact('items')); // Pass the items to the view
+        $items = Item::with('provider')->get(); 
+        return view('backOffice.items.index', compact('items')); 
     }
     
     public function edit($id)
     {
-        $item = Item::findOrFail($id); // Find the item by ID or fail
-        $providers = Provider::all(); // Fetch all providers
-        return view('backOffice.items.edit', compact('item', 'providers')); // Pass the item and providers to the view
+        $item = Item::findOrFail($id); 
+        $providers = Provider::all(); 
+        return view('backOffice.items.edit', compact('item', 'providers')); 
     }
     
     public function update(Request $request, $id)
@@ -61,37 +61,37 @@ class ItemController extends Controller
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
-        $item = Item::findOrFail($id); // Find the item by ID or fail
+        $item = Item::findOrFail($id); 
         $item->name = $request->name;
         $item->cost = $request->cost;
         $item->provider_id = $request->provider_id;
     
         if ($request->hasFile('photo')) {
-            // Optionally delete the old photo
+           
             if ($item->photo) {
-                \Storage::delete('public/' . $item->photo); // Delete old photo if exists
+                \Storage::delete('public/' . $item->photo); 
             }
             
-            $path = $request->file('photo')->store('photos', 'public'); // Store the new photo
-            $item->photo = $path; // Save the new path to the database
+            $path = $request->file('photo')->store('photos', 'public'); 
+            $item->photo = $path; 
         }
     
-        $item->save(); // Update the item in the database
+        $item->save(); 
     
-        return redirect()->route('backOffice.items.index')->with('success', 'Item updated successfully.'); // Redirect with success message
+        return redirect()->route('backOffice.items.index')->with('success', 'Item updated successfully.'); 
     }
     
     public function destroy($id)
     {
-        $item = Item::findOrFail($id); // Find the item by ID or fail
+        $item = Item::findOrFail($id); 
     
         if ($item->photo) {
-            \Storage::delete('public/' . $item->photo); // Delete the photo from storage if it exists
+            \Storage::delete('public/' . $item->photo); 
         }
     
-        $item->delete(); // Delete the item from the database
+        $item->delete(); 
     
-        return redirect()->route('backOffice.items.index')->with('success', 'Item deleted successfully.'); // Redirect with success message
+        return redirect()->route('backOffice.items.index')->with('success', 'Item deleted successfully.'); 
     }
     
 }
