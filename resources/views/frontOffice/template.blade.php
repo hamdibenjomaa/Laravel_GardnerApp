@@ -58,7 +58,7 @@
                 <a href="service.html" class="nav-item nav-link">Formation</a>
                 <a href="project.html" class="nav-item nav-link">Nos Partenaires</a>
                 <a href="project.html" class="nav-item nav-link">Evenements</a>
-                <a href="project.html" class="nav-item nav-link">Nos Equipes</a>
+                <a href="{{ route('jardinier.index') }}" class="nav-item nav-link">Nos Equipes</a>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
             <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Sign In<i class="fa fa-arrow-right ms-3"></i></a>

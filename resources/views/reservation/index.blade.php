@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jardinier Management</title>
+    <title>reservation Management</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -86,58 +86,56 @@
                 <a href="service.html" class="nav-item nav-link">Formation</a>
                 <a href="project.html" class="nav-item nav-link">Nos Partenaires</a>
                 <a href="project.html" class="nav-item nav-link">Evenements</a>
-                <a href="{{ route('jardinier.index') }}" class="nav-item nav-link">Nos Equipes</a>
+                <a href="{{ route('reservation.index') }}" class="nav-item nav-link">Nos Equipes</a>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
             <a href="" class="btn btn-primary py-2 px-lg-4 rounded-0 d-none d-lg-block">Sign In <i class="fa fa-arrow-right ms-2"></i></a>
         </div>
     </nav>
 
-    <!-- Add New Jardinier Button -->
+    <!-- Add New reservation Button -->
     <div class="me-3 my-3 text-end">
-        <a href="{{ route('jardinier.create') }}" class="btn btn-custom-add mb-0">
-            <i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Jardinier
+        <a href="{{ route('reservation.create') }}" class="btn btn-custom-add mb-0">
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Add New reservation
         </a>
     </div>
 
-    <!-- Jardinier Table -->
+    <!-- reservation Table -->
     <div class="container">
         <table class="table align-items-center mb-0 table-bordered">
             <thead class="thead-light">
                 <tr>
                     <th>ID</th>
-                    <th>Nom</th>
-                    <th>Prenom</th>
-                    <th>Tel</th>
-                    <th>Localisation</th>
-                    <th>Horaire</th>
-                    <th>Cout</th>
-                    <th>Specialite</th>
+                    <th>description_service</th>
+                    <th>date réservation</th>
+                    <th>client</th>
+                    <th>feedback</th>
+                    <th>reference</th>
+                    <th>jardinier_id</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($jardiniers as $jardinier)
+                @foreach ($reservations as $reservation)
                 <tr>
-                    <td>{{ $jardinier->id }}</td>
-                    <td><a href="{{ route('jardinier.show', $jardinier->id) }}">{{ $jardinier->nom }}</a></td>
-                    <td>{{ $jardinier->prenom }}</td>
-                    <td>{{ $jardinier->telephone }}</td>
-                    <td>{{ $jardinier->localisation }}</td>
-                    <td>{{ $jardinier->horaire }}</td>
-                    <td>{{ $jardinier->cout }}</td>
-                    <td>{{ $jardinier->specialite }}</td>
+                    <td>{{ $reservation->id }}</td>
+                    <td><a href="{{ route('reservation.show', $reservation->id) }}">{{ $reservation->description_service }}</a></td>
+                    <td>{{ $reservation->date_réservation }}</td>
+                    <td>{{ $reservation->client }}</td>
+                    <td>{{ $reservation->feedback }}</td>
+                    <td>{{ $reservation->reference }}</td>
+                    <td>{{ $reservation->jardinier_id }}</td>
                     <td class="action-buttons">
                         <!-- Edit Button -->
-                        <a href="{{ route('jardinier.edit', $jardinier->id) }}" class="btn btn-edit btn-sm">
+                        <a href="{{ route('reservation.edit', $reservation->id) }}" class="btn btn-edit btn-sm">
                             <i class="fas fa-edit"></i>Edit
                         </a>
 
                         <!-- Delete Form/Button -->
-                        <form action="{{ route('jardinier.destroy', $jardinier->id) }}" method="POST" class="d-inline">
+                        <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-delete btn-sm" onclick="return confirm('Are you sure you want to delete this jardinier?');">
+                            <button type="submit" class="btn btn-delete btn-sm" onclick="return confirm('Are you sure you want to delete this reservation?');">
                                 <i class="fas fa-trash"></i>Delete
                             </button>
                         </form>

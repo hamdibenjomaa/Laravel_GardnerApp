@@ -19,4 +19,8 @@ class Jardinier extends Model
         'cout',
         'specialite',
     ];
+    public function reservation()
+    {
+        return $this->hasMany(reservation::class);
+    }
 }
