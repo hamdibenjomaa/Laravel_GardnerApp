@@ -27,7 +27,11 @@
     <div class="container mt-5">
         <h1>Confirm Checkout</h1>
 
-        <p>Total amount: ${{ number_format($totalCost, 2) }}</p>
+        <p>Total amount after discount: ${{ number_format($totalAfterDiscount, 2) }}</p>
+@if($discount > 0)
+    <p>Coupon discount applied: {{ $discount }}%</p>
+@endif
+
 
         
         <h3>Your Cart Items:</h3>
@@ -39,7 +43,7 @@
 
         <form action="{{ route('cart.confirmCheckout') }}" method="POST">
     @csrf
-    <input type="hidden" name="totalAmount" value="{{ $totalCost }}">
+    <input type="hidden" name="totalAmount" value="{{ $totalAfterDiscount }}">
     <button type="submit" class="btn btn-success">Confirm</button>
     <a href="{{ route('cart.show') }}" class="btn btn-danger">Cancel</a>
 </form>

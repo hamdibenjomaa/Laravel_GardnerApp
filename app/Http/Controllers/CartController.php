@@ -10,6 +10,8 @@ use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\SMSService;
+use App\Models\Coupon;
 
 
 class CartController extends Controller
@@ -47,13 +49,19 @@ class CartController extends Controller
         return response()->json(['success' => true]);
     }
     
-    
     public function showCart()
     {
+        $discount = session('discount', 0);
+    
+      
+        if ($discount > 0 && request()->route()->getName() !== 'cart.show') {
+            session()->forget('discount');
+        }
+    
         $cart = Auth::user()->cart;
     
         if (!$cart || $cart->items->isEmpty()) {
-            return view('cart.show', ['cartItems' => [], 'total' => 0]);
+            return view('cart.show', ['cartItems' => [], 'total' => 0, 'discount' => 0]);
         }
     
         $cartItems = $cart->items->map(function ($cartItem) {
@@ -65,12 +73,15 @@ class CartController extends Controller
             ];
         });
     
-        $total = $cartItems->sum(function ($item) {
-            return $item['price'] * $item['quantity'];
-        });
+        $total = $cartItems->sum(fn($item) => $item['price'] * $item['quantity']);
+        $totalAfterDiscount = $total - ($total * $discount / 100);
     
-        return view('cart.show', compact('cartItems', 'total'));
+        return view('cart.show', compact('cartItems', 'total', 'discount', 'totalAfterDiscount'));
     }
+    
+
+
+
     public function removeFromCart($itemId)
 {
     $cart = Auth::user()->cart;
@@ -94,20 +105,18 @@ public function checkout()
         return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
     }
 
- 
-    $totalCost = $cartItems->sum(function ($cartItem) {
-        return $cartItem->item->cost * $cartItem->quantity;
-    });
+    $totalCost = $cartItems->sum(fn($item) => $item->item->cost * $item->quantity);
+    $discount = session('discount', 0);
+    $totalAfterDiscount = $totalCost - ($totalCost * $discount / 100); // Calculate total after discount
 
-    $user = Auth::user();
-
-
-    if ($user->balance < $totalCost) {
-        return redirect()->route('cart.show')->with('error', 'Insufficient balance for checkout.');
+    if (Auth::user()->balance < $totalAfterDiscount) {
+        return redirect()->route('cart.show')->with('error', 'Insufficient balance.');
     }
 
-    return view('cart.confirm', compact('cartItems', 'totalCost'));
+    return view('cart.confirm', compact('cartItems', 'totalAfterDiscount', 'discount')); // Pass discount to view if needed
 }
+
+
 
 
 
@@ -120,56 +129,56 @@ public function confirmCheckout(Request $request)
         return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
     }
 
-    $totalAmount = $cartItems->sum(function ($cartItem) {
-        return $cartItem->item->cost * $cartItem->quantity;
-    });
+    // Calculate the total amount after discount
+    $totalCost = $cartItems->sum(fn($item) => $item->item->cost * $item->quantity);
+    $discount = session('discount', 0);
+    $totalAmount = $totalCost - ($totalCost * $discount / 100); // Use total after discount
 
     $user = Auth::user();
-
 
     if ($user->balance < $totalAmount) {
         return redirect()->route('cart.show')->with('error', 'Insufficient balance for checkout.');
     }
 
- 
     DB::beginTransaction();
     try {
-     
-        $user->decrement('balance', $totalAmount);
+        $user->decrement('balance', $totalAmount); // Decrement the balance using the discounted amount
 
         foreach ($cartItems as $cartItem) {
             $item = $cartItem->item;
-
-  
             $item->decrement('stock', $cartItem->quantity);
 
-          
             if ($item->stock === 0) {
                 $item->availability = 'unavailable';
                 $item->save();
             }
-        
-                     DB::table('histories')->insert([
-                        'user_id' => $user->id,
-                        'item_id' => $item->id,
-                        'item_name' => $item->name,
-                        'quantity' => $cartItem->quantity,
-                        'cost' => $item->cost,
-                        'total_cost' => $cartItem->quantity * $item->cost,
-                        'purchased_at' => now(),
-                    ]);
+
+            DB::table('histories')->insert([
+                'user_id' => $user->id,
+                'item_id' => $item->id,
+                'item_name' => $item->name,
+                'quantity' => $cartItem->quantity,
+                'cost' => $item->cost,
+                'total_cost' => $cartItem->quantity * $item->cost,
+                'purchased_at' => now(),
+            ]);
 
             $cartItem->delete();
+            session ()->forget('discount');
         }
 
         DB::commit();
+
+        $message = "Thank you for your purchase! Your order has been confirmed.";
+        $this->smsService->sendSMS($user->phone_number, $message);
+
         return redirect()->route('cart.show')->with('success', 'Checkout successful.');
     } catch (\Exception $e) {
-      
         DB::rollback();
         return redirect()->route('cart.show')->with('error', 'An error occurred during checkout. Please try again.');
     }
 }
+
 public function history()
 {
     $user = Auth::user();
@@ -188,4 +197,30 @@ public function history()
         return $pdf->download('purchase-history.pdf');
     }
 
+
+
+    public function __construct(SMSService $smsService)
+    {
+        $this->smsService = $smsService;
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $code = $request->input('coupon_code');
+        $coupon = Coupon::where('code', $code)->first();
+    
+        if (!$coupon) {
+            return response()->json(['success' => false, 'message' => 'Invalid coupon code.']);
+        }
+    
+        if ($coupon->expires_at && now()->greaterThan($coupon->expires_at)) {
+            return response()->json(['success' => false, 'message' => 'This coupon has expired.']);
+        }
+    
+        $discount = $coupon->discount;
+        session(['discount' => $discount]);
+    
+        return response()->json(['success' => true, 'discount' => $discount, 'message' => 'Coupon applied successfully!']);
+    }
+    
 }

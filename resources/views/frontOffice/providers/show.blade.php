@@ -311,7 +311,7 @@
             $('.filter-btn').removeClass('active');
             $(this).addClass('active');
 
-            // Send AJAX request to filter items
+      
             $.ajax({
                 url: "{{ route('provider.items.filter', ['provider' => $provider->id]) }}",
                 method: 'GET',
@@ -327,37 +327,36 @@
     });
 
     function openQuantityModal(itemId, itemName, stock) {
-        // Set item name in the modal title
+ 
         document.getElementById('modalItemName').textContent = `Add ${itemName} to Cart`;
 
-        // Update form action to point to the correct route
+    
         const form = document.getElementById('addToCartForm');
         form.action = `/cart/add/${itemId}`;
 
-        // Show available stock in the modal
+      
         document.getElementById('stockMessage').textContent = `Available stock: ${stock}`;
 
-        // Update quantity input attributes
+     
         const quantityInput = document.getElementById('quantity');
-        quantityInput.max = stock; // Set max quantity to available stock
+        quantityInput.max = stock; 
 
-        // Show the modal
         document.getElementById('quantityModal').style.display = 'block';
     }
 
     function closeQuantityModal() {
-        // Hide the modal
+    
         document.getElementById('quantityModal').style.display = 'none';
     }
 
-    // Handle the quantity modal submission
+  
     document.getElementById('addToCartForm').addEventListener('submit', function (event) {
-        event.preventDefault();  // Prevent default form submission
+        event.preventDefault();  
 
         const form = event.target;
         const formData = new FormData(form);
 
-        // Send the form data using Fetch API
+      
         fetch(form.action, {
             method: 'POST',
             body: formData,
@@ -368,8 +367,8 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                closeQuantityModal();  // Close the quantity modal
-                showNextStepModal();   // Show the success/next step modal
+                closeQuantityModal();  
+                showNextStepModal(); 
             } else {
                 alert('An error occurred while adding the item to the cart.');
             }

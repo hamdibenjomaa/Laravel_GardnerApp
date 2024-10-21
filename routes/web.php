@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CartController;
+use App\Http\Middleware\ResetCoupon;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index');
+Route::get('/providers', [ProviderController::class, 'index'])->name('providers.index')->middleware(ResetCoupon::class);
 Route::get('/providers/{id}', [ProviderController::class, 'show'])->name('providers.show');
 Route::get('/backOffice/home', [ProviderController::class, 'home'])->name('backOffice.providers.home');
 
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart/remove/{item}', [CartController::class, 'removeFromCart'])->name('cart.remove');
     Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/cart/confirm', [CartController::class, 'confirmCheckout'])->name('cart.confirmCheckout'); 
+    Route::post('/cart/apply-coupon', [CartController::class, 'applyCoupon'])->name('cart.applyCoupon');
+
 });
 
 
