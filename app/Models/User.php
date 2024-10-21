@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'balance', 
     ];
 
     /**
@@ -62,4 +63,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function cart()
+{
+    return $this->hasOne(Cart::class)->where('is_checked_out', false);
+}
+
+
+public function canAfford($amount)
+{
+    return $this->balance >= $amount;
+}
+public function history()
+{
+    return $this->hasMany(History::class);
+}
+
+
 }

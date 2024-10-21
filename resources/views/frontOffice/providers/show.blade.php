@@ -7,6 +7,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
   
 
@@ -121,24 +123,37 @@
         <div class="row wow fadeInUp" data-wow-delay="0.3s">
             <div class="col-12 text-center">
                 <ul class="list-inline rounded mb-5" id="portfolio-flters">
-                    <li class="mx-2 active" data-filter="*">All</li>
-                    <li class="mx-2" data-filter=".first">Available Items</li>
-                    <li class="mx-2" data-filter=".second">incoming Items</li>
+                    <li class="mx-2 active filter-btn" data-filter="all">All</li>
+                    <li class="mx-2 filter-btn" data-filter="available">Available Items</li>
+                    <li class="mx-2 filter-btn" data-filter="incoming">Incoming Items</li>
                 </ul>
             </div>
         </div>
-        <div class="row g-4 portfolio-container">
-            @foreach($provider->items as $item) <!-- Use $provider here -->
-                <div class="col-lg-4 col-md-6 portfolio-item {{ $item->status ?? 'first' }} wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row g-4 portfolio-container" id="items-container">
+            @foreach($provider->items as $item)
+                <div class="col-lg-4 col-md-6 portfolio-item {{ $item->availability }} wow fadeInUp" data-wow-delay="0.1s">
                     <div class="portfolio-inner rounded">
-                    <img class="img-fluid" src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->name }}">
+                        <img class="img-fluid" src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->name }}">
 
                         <div class="portfolio-text">
                             <h4 class="text-white mb-4">{{ $item->name }}</h4>
-                            <h4 class="text-white mb-4">{{ $item->cost }}</h4>
+                            <h4 class="text-white mb-4">${{ $item->cost }}</h4>
+                            <h4 class="text-white mb-4">{{ $item->availability }}</h4>
                             <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="{{ asset('img/' . $item->image) }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-lg-square rounded-circle mx-2" href="{{ asset('storage/' . $item->photo) }}" data-lightbox="portfolio">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                @if($item->availability == 'available' && $item->stock > 0)
+                                    <a class="btn btn-lg-square rounded-circle mx-2" 
+                                       href="#" 
+                                       onclick="openQuantityModal({{ $item->id }}, '{{ $item->name }}', {{ $item->stock }})">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                @else
+                                    <button class="btn btn-lg-square rounded-circle mx-2" disabled>
+                                        <i class="fa fa-link"></i>
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -147,7 +162,57 @@
         </div>
     </div>
 </div>
-<!-- Projects End -->
+<!-- Items End -->
+
+<!-- Quantity Modal -->
+<div class="modal" id="quantityModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalItemName"></h5>
+                <button type="button" class="close" onclick="closeQuantityModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addToCartForm" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <label for="quantity">Select Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control" required>
+                    <p id="stockMessage" class="text-muted"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeQuantityModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Success and Next Step Modal -->
+<div class="modal" id="nextStepModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Item Added Successfully!</h5>
+                <button type="button" class="close" onclick="closeNextStepModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>The item was successfully added to your cart. What would you like to do next?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{{ route('cart.show') }}" class="btn btn-primary">View Cart</a>
+                <button type="button" class="btn btn-secondary" onclick="closeNextStepModal()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -235,6 +300,94 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('.filter-btn').on('click', function () {
+            const filter = $(this).data('filter');
+
+            $('.filter-btn').removeClass('active');
+            $(this).addClass('active');
+
+            // Send AJAX request to filter items
+            $.ajax({
+                url: "{{ route('provider.items.filter', ['provider' => $provider->id]) }}",
+                method: 'GET',
+                data: { availability: filter },
+                success: function (response) {
+                    $('#items-container').html(response);
+                },
+                error: function () {
+                    alert('Failed to load items. Please try again.');
+                }
+            });
+        });
+    });
+
+    function openQuantityModal(itemId, itemName, stock) {
+        // Set item name in the modal title
+        document.getElementById('modalItemName').textContent = `Add ${itemName} to Cart`;
+
+        // Update form action to point to the correct route
+        const form = document.getElementById('addToCartForm');
+        form.action = `/cart/add/${itemId}`;
+
+        // Show available stock in the modal
+        document.getElementById('stockMessage').textContent = `Available stock: ${stock}`;
+
+        // Update quantity input attributes
+        const quantityInput = document.getElementById('quantity');
+        quantityInput.max = stock; // Set max quantity to available stock
+
+        // Show the modal
+        document.getElementById('quantityModal').style.display = 'block';
+    }
+
+    function closeQuantityModal() {
+        // Hide the modal
+        document.getElementById('quantityModal').style.display = 'none';
+    }
+
+    // Handle the quantity modal submission
+    document.getElementById('addToCartForm').addEventListener('submit', function (event) {
+        event.preventDefault();  // Prevent default form submission
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        // Send the form data using Fetch API
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                closeQuantityModal();  // Close the quantity modal
+                showNextStepModal();   // Show the success/next step modal
+            } else {
+                alert('An error occurred while adding the item to the cart.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    function showNextStepModal() {
+        document.getElementById('nextStepModal').style.display = 'block';
+    }
+
+    function closeNextStepModal() {
+        document.getElementById('nextStepModal').style.display = 'none';
+    }
+</script>
+
+
+
 </body>
 
 </html>

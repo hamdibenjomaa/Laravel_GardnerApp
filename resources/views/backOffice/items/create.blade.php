@@ -158,6 +158,19 @@
                             <label for="photo" class="form-label">Photo</label>
                             <input type="file" class="form-control" id="photo" name="photo">
                         </div>
+                        <div class="mb-3">
+                                <label for="availability" class="form-label">Availability</label>
+                                <select class="form-select" id="availability" name="availability" required>
+                                    <option value="available">Available</option>
+                                    <option value="incoming">Incoming</option>
+                                    <option value="unavailable">Unavailable</option>
+                                </select>
+                            </div>
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="stock" name="stock" required>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Add Item</button>
                     </form>
                 </div>

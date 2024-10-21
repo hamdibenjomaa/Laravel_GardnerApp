@@ -143,6 +143,8 @@
                                 <th>Name</th>
                                 <th>Cost</th>
                                 <th>Provider</th>
+                                <th>Availability</th>
+                                <th>Stock</th>
                                 <th>Photo</th>
                                 <th>Actions</th>
                             </tr>
@@ -154,7 +156,10 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->cost }}</td>
                                     <td>{{ $item->provider->name }}</td>
-                                    <td>
+                                    <td> {{ $item->availability }} </td>
+
+                                       <td>{{$item->stock}} </td>
+                                        <td>
                                         @if ($item->photo)
                                             <img src="{{ asset('storage/' . $item->photo) }}" alt="Item Photo" width="50">
                                         @endif
@@ -166,6 +171,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
                                         </form>
+                                        <a href="{{ route('backOffice.items.history', $item->id) }}" class="btn btn-info">History</a>
                                     </td>
                                 </tr>
                             @endforeach

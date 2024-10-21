@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Provider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Item; 
 
 class ProviderController extends Controller
 {
@@ -107,4 +108,21 @@ class ProviderController extends Controller
 
         return redirect()->route('backOffice.providers.index')->with('success', 'Provider deleted successfully.');
     }
+
+
+    public function filterItems(Request $request, $providerId)
+    {
+        $availability = $request->get('availability'); 
+        $query = Item::where('provider_id', $providerId);
+    
+        if ($availability && $availability !== 'all') {
+            $query->where('availability', $availability);
+        }
+    
+        $items = $query->get();
+    
+      
+        return view('frontOffice.providers.filtered-items', compact('items'))->render();
+    }
+
 }

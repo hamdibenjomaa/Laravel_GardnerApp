@@ -16,6 +16,8 @@ class Item extends Model
         'cost',
         'provider_id',
         'photo',
+        'availability',
+        'stock', 
     ];
 
     public function provider()

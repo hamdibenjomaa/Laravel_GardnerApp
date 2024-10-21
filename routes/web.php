@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,8 +26,23 @@ Route::get('backOffice/items', [ItemController::class, 'index'])->name('backOffi
 Route::post('backOffice/items', [ItemController::class, 'store'])->name('backOffice.items.store');
 Route::put('backOffice/items/{item}', [ItemController::class, 'update'])->name('backOffice.items.update');
 Route::delete('backOffice/items/{item}', [ItemController::class, 'destroy'])->name('backOffice.items.destroy');
+Route::get('/items/{id}/history', [ItemController::class, 'showHistory'])->name('backOffice.items.history');
 
 
+Route::get('/providers/{provider}/items/filter', [ProviderController::class, 'filterItems'])->name('provider.items.filter');
+Route::get('/history', [CartController::class, 'history'])->name('history')->middleware('auth');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+    Route::post('/cart/add/{item}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/cart/remove/{item}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/cart/confirm', [CartController::class, 'confirmCheckout'])->name('cart.confirmCheckout'); 
+});
+
+
+Route::get('/purchase-history/pdf', [CartController::class, 'generatePDF'])->name('purchase.pdf');
 
 
 Route::middleware([

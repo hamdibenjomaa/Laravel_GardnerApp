@@ -174,6 +174,19 @@
                             <label for="photo" class="form-label">Photo</label>
                             <input type="file" name="photo" class="form-control">
                         </div>
+                        <div class="mb-3">
+                            <label for="availability" class="form-label">Availability</label>
+                            <select class="form-select" id="availability" name="availability" required>
+                                <option value="available" {{ old('availability', $item->availability) == 'available' ? 'selected' : '' }}>Available</option>
+                                <option value="incoming" {{ old('availability', $item->availability) == 'incoming' ? 'selected' : '' }}>Incoming</option>
+                                <option value="unavailable" {{ old('availability', $item->availability) == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
+                            </select>
+                            <div class="mb-3">
+                              <label for="stock" class="form-label">Stock</label>
+
+                            <input type="number" class="form-control" id="stock" name="stock" value="{{ old('stock', $item->stock) }}" required>
+
+                        </div>
 
                         <button type="submit" class="btn btn-primary">Update Item</button>
                         <a href="{{ route('backOffice.items.index') }}" class="btn btn-secondary">Cancel</a>
