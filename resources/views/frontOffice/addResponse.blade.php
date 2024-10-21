@@ -1,6 +1,6 @@
 @extends('frontOffice.template')
 
-@section('content')
+@section('content') 
     <h1>Add Response</h1>
 
     <form action="{{ route('reclamations.responses.store', $reclamation_id) }}" method="POST">

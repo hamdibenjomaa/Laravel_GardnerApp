@@ -67,8 +67,9 @@
     <!-- Navbar End -->
 
 
-    @yield('content') 
-    <!-- @yield('Response')  --> 
+    @yield('content') <!-- This is where content from other views will go -->
+    @yield('blogs') <!-- This is where content from other views will go -->
+    @yield('addBlog') <!-- This is where content from other views will go -->
 
 
 

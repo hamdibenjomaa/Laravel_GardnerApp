@@ -14,7 +14,7 @@ Route::get('/Admin', function () {
     return view('backOffice.template');
 });
 Route::resource('reclamations', ReclamationController::class);
-Route::get('/reclamations', [ReclamationController::class, 'index'])->name('frontOffice.reclamations');
+// Route::get('/reclamations', [ReclamationController::class, 'index'])->name('frontOffice.reclamations');
     Route::get('/Addrec', [ReclamationController::class, 'create'])->name('reclamations.add');
     Route::get('/updateReclamations{id}', [ReclamationController::class, 'edit'])->name('reclamations.edit');
     Route::delete('/reclamations/{id}', [ReclamationController::class, 'destroy'])->name('reclamations.destroy');
@@ -28,7 +28,7 @@ Route::get('/reclamations/{reclamation}/responses/create', [ResponseController::
 Route::post('/reclamations/{reclamation}/responses', [ResponseController::class, 'store'])->name('reclamations.responses.store');
 Route::get('/reclamations/{reclamation}/responses/{response}/edit', [ResponseController::class, 'edit'])->name('reclamations.responses.edit');
 Route::put('/reclamations/{reclamation}/responses/{response}', [ResponseController::class, 'update'])->name('reclamations.responses.update');
-Route::delete('/responses/{response}', [ResponseController::class, 'destroy'])->name('reclamations.responses.destroy');
+Route::delete('/reclamations/{reclamation}/responses/{response}', [ResponseController::class, 'destroy'])->name('reclamations.responses.destroy');
 
 
 

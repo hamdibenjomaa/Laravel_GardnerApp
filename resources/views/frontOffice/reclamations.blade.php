@@ -1,6 +1,6 @@
 @extends('frontOffice.template')
 
- @section('content') 
+@section('content')
     <h1>Reclamations</h1>
     <a href="{{ route('reclamations.add') }}" class="btn btn-primary">Add Reclamation</a>
 

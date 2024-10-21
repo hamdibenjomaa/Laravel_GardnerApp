@@ -13,9 +13,10 @@ class ResponseController  extends Controller
      */
     public function index($reclamation_id)
     {
-        $reclamation = Reclamation::findOrFail($reclamation_id);
-        $responses = $reclamation->responses; // Retrieve all responses for the reclamation
-        return view('frontOffice.responses', compact('responses', 'reclamation')); // Pass responses and reclamation to the view
+        $reclamation = Reclamation::find($reclamation_id);
+        $responses = Response::where('reclamation_id', $reclamation_id)->get();
+    
+        return view('frontOffice.responses', compact('reclamation', 'responses'));
     }
 
     /**
@@ -42,7 +43,7 @@ class ResponseController  extends Controller
         $response->message = $request->input('message');
         $response->save();
 
-        return redirect()->route('responses.index', $reclamation_id)->with('success', 'Response added successfully!');
+        return redirect()->route('reclamations.responses.index', $reclamation_id)->with('success', 'Response added successfully!');
     }
 
     /**
@@ -71,16 +72,20 @@ class ResponseController  extends Controller
         $response->message = $request->input('message');
         $response->save();
 
-        return redirect()->route('responses.index', $reclamation_id)->with('success', 'Response updated successfully');
+        return redirect()->route('reclamations.responses.index', $reclamation_id)->with('success', 'Response updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($reclamation_id, $id)
+    public function destroy($reclamation_id, $response_id)
     {
-        $response = Response::findOrFail($id); // Find response by ID
+        // Find the response by ID
+        $response = Response::findOrFail($response_id);
+        
+        // Delete the response
         $response->delete();
-        return redirect()->route('responses.index', $reclamation_id)->with('success', 'Response deleted successfully');
-    }
+    
+           return redirect()->route('reclamations.responses.index', $reclamation_id)->with('success', 'Response deleted successfully');
+}
 }

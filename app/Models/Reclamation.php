@@ -9,7 +9,11 @@ class Reclamation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = [
+    'title', 
+    'description',
+    'user_id'
+    ];
 
     // One-to-Many relationship with Response
     public function responses()

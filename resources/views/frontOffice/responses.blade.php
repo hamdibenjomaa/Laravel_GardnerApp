@@ -1,8 +1,9 @@
-@extends('frontOffice.home')
+@extends('frontOffice.template')
 
- @section('content') 
+@section('content')
 <div class="container">
-    <h1>Responses for Reclamation: {{ $reclamation->title }}</h1>
+    <h1 class="my-4">Responses for Reclamation: {{ $reclamation->title }}</h1>
+    
     <a href="{{ route('reclamations.responses.create', $reclamation->id) }}" class="btn btn-success mb-3">Add Response</a>
 
     @if (session('success'))
@@ -23,12 +24,13 @@
                     <td>{{ $response->id }}</td>
                     <td>{{ $response->message }}</td>
                     <td>
-                        <a href="{{ route('reclamations.responses.edit', [$reclamation->id, $response->id]) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('reclamations.responses.destroy', $response->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                    <a href="{{ route('reclamations.responses.edit', ['reclamation' => $reclamation->id, 'response' => $response->id]) }}" class="btn btn-warning">Edit Response</a>
+                    <form action="{{ route('reclamations.responses.destroy', ['reclamation' => $reclamation->id, 'response' => $response->id]) }}" method="POST">
+                   @csrf
+                   @method('DELETE')
+                   <button type="submit" class="btn btn-danger">Delete</button>
+                   </form>
+
                     </td>
                 </tr>
             @endforeach

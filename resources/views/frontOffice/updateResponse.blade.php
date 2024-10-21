@@ -1,6 +1,6 @@
 @extends('frontOffice.template')
 
-@section('content')
+@section('content') 
     <h1>Edit Response</h1>
 
     <form action="{{ route('reclamations.responses.update', [$reclamation_id, $response->id]) }}" method="POST">
