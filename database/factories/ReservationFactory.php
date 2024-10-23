@@ -21,8 +21,7 @@ class ReservationFactory extends Factory
             'description_service'=> fake()->name(),
             'date_réservation'=> fake()->date(),
             'client'=> fake()->name(),
-            'feedback'=>fake()->text(),
-            'reference'=> fake()->phoneNumber(),
+            'reference'=> fake()->randomNumber(4),
             'jardinier_id'=> Jardinier::factory(),
         ];
     }

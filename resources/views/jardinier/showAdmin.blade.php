@@ -1,4 +1,4 @@
-@extends('jardinier.template')
+@extends('backOffice.template')
 
 @section('show')
 <div class="container mt-5">
@@ -41,9 +41,18 @@
             </div>
         </div>
         <div class="card-footer text-end">
-            <a href="{{ route('reservation.create', ['jardinier_id' => $jardinier->id]) }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Réserver
+            <a href="{{ route('jardinier.edit', $jardinier->id) }}" class="btn btn-edit btn-sm">
+                <i class="fas fa-edit"></i>Edit
             </a>
+
+            <!-- Delete Form/Button -->
+            <form action="{{ route('jardinier.destroy', $jardinier->id) }}" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-delete btn-sm" onclick="return confirm('Are you sure you want to delete this jardinier?');">
+                    <i class="fas fa-trash"></i>Delete
+                </button>
+            </form>
         </div>
     </div>
 </div>

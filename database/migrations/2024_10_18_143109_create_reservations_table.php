@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('description_service')->nullable();
             $table->date('date_réservation')->nullable();
             $table->string('client')->nullable();
-            $table->string('feedback')->nullable();
             $table->string('reference')->nullable();
-            $table->foreignId('jardinier_id')->nullable()->constrained();
+            $table->foreignId('jardinier_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

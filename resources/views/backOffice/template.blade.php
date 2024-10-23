@@ -70,11 +70,19 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('jardinier.indexAdmin') }}" aria-expanded="false">
                         <span>
                           <i class="ti ti-layout-dashboard"></i>
                         </span>
                             <span class="hide-menu">Equipes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('reservation.index') }}" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Reservations</span>
                         </a>
                     </li>
 
@@ -130,13 +138,15 @@
                 </div>
             </nav>
         </header>
+
         <!--  Header End -->
         <div class="container-fluid">
 
-
-            <div class="py-6 px-6 text-center fixed-bottom">
-                <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
-            </div>
+            @yield('home') 
+            @yield('jardinier') 
+            @yield('show') 
+            @yield('create') 
+            @yield('edit') 
         </div>
     </div>
 </div>

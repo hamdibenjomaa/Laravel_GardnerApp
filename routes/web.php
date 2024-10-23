@@ -8,21 +8,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/jardinier', [JardinierController::class,'index'])->name('jardinier.index');
-Route::get('/reservation', [ReservationController::class,'index'])->name('reservation.index');
-Route::get('/jardinier/create', [JardinierController::class,'create'])->name('jardinier.create');
-Route::get('/reservation/create', [ReservationController::class,'create'])->name('reservation.create');
-Route::post('/jardinier/store', [JardinierController::class,'store'])->name('jardinier.store');
-Route::post('/reservation/store', [ReservationController::class,'store'])->name('reservation.store');
-Route::get('/jardinier/edit/{id}', [JardinierController::class,'edit'])->name('jardinier.edit');
-Route::get('/reservation/edit/{id}', [ReservationController::class,'edit'])->name('reservation.edit');
-Route::post('/jardinier/update/{id}', [JardinierController::class,'update'])->name('jardinier.update');
-Route::post('/reservation/update/{id}', [ReservationController::class,'update'])->name('reservation.update');
-Route::delete('/jardinier/delete/{id}', [JardinierController::class,'destroy'])->name('jardinier.destroy');
-Route::delete('/reservation/delete/{id}', [ReservationController::class,'destroy'])->name('reservation.destroy');
-Route::get('/jardinier/show/{id}', [JardinierController::class,'show'])->name('jardinier.show');
-Route::get('/reservation/show/{id}', [ReservationController::class,'show'])->name('reservation.show');
 
+Route::prefix('')->controller(JardinierController::class)->group(function(){
+    Route::get('jardinier-home', 'home')->name('jardinier.home');
+    Route::get('jardinier', 'index')->name('jardinier.index');
+    Route::get('jardinier-admin', 'indexAdmin')->name('jardinier.indexAdmin');
+    Route::get('jardinier-create', 'create')->name('jardinier.create');
+    Route::post('jardinier-store', 'store')->name('jardinier.store');
+    Route::get('jardinier-edit-{jardinierId}', 'edit')->name('jardinier.edit');
+    Route::post('jardinier-update/{jardinierId}','update')->name('jardinier.update');
+    Route::delete('jardinier-delete/{jardinierId}', 'destroy')->name('jardinier.destroy');
+    Route::get('jardinier-show-{jardinierId}', 'show')->name('jardinier.show');
+    Route::get('jardinier-showadmin-{jardinierId}', 'showAdmin')->name('jardinier.showAdmin');
+});
+Route::prefix('')->controller(ReservationController::class)->group(function(){
+    Route::get('reservation', 'index')->name('reservation.index');
+    Route::get('reservation-create', 'create')->name('reservation.create');
+    Route::post('reservation/store', 'store')->name('reservation.store');
+    Route::get('reservation-edit-{reservationId}', 'edit')->name('reservation.edit');
+    Route::post('reservation/update/{reservationId}','update')->name('reservation.update');
+    Route::delete('reservation/delete/{reservationId}', 'destroy')->name('reservation.destroy');
+    Route::get('reservation-show-{reservationId}', 'show')->name('reservation.show');
+});
 
 Route::middleware([
     'auth:sanctum',

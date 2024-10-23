@@ -13,10 +13,19 @@ class JardinierController extends Controller
         $jardiniers = Jardinier::all();
         return view('jardinier.index',compact('jardiniers'));
     }
+    public function indexAdmin()
+    {
+        $jardiniers = Jardinier::all();
+        return view('jardinier.indexAdmin',compact('jardiniers'));
+    }
 
     public function create()
     {
         return view('jardinier.create');
+    }
+    public function home()
+    {
+        return view('jardinier.home');
     }
     
     public function store(Request $request)
@@ -42,7 +51,7 @@ class JardinierController extends Controller
         $jardinier->save();
 
         // dd('student created successfully');
-        return redirect ('/jardinier');
+        return redirect ('/jardinier-admin');
     }
 
     public function edit($id)
@@ -84,15 +93,20 @@ class JardinierController extends Controller
         $jardinier->specialite = $request->input('specialite');
         $jardinier->save();
 
-        return redirect()->route('jardinier.index')->with('success', 'Jardinier updated successfully');
+        return redirect()->route('jardinier.indexAdmin')->with('success', 'Jardinier updated successfully');
     }
     
     public function show($id)
     {
 //        $course = Course::with('staff')->findOrFail($id);
         $jardinier = Jardinier::findOrFail($id);
-//        dd($course);
         return view('jardinier.show', ['jardinier' => $jardinier]);
+    }
+    public function showAdmin($id)
+    {
+//        $course = Course::with('staff')->findOrFail($id);
+        $jardinier = Jardinier::findOrFail($id);
+        return view('jardinier.showAdmin', ['jardinier' => $jardinier]);
     }
 
     public function destroy($id)
@@ -109,7 +123,7 @@ class JardinierController extends Controller
         $jardinier->delete();
 
 //        dd('Parent deleted successfully');
-        return redirect()->route('jardinier.index')->with('success', 'Jardinier deleted successfully');
+        return redirect()->route('jardinier.indexAdmin')->with('success', 'Jardinier deleted successfully');
     }
 
 }

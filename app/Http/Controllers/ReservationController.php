@@ -28,32 +28,34 @@ class ReservationController extends Controller
             'description_service' => 'nullable',
             'date_réservation' => 'nullable',
             'client' => 'nullable',
-            'feedback' => 'nullable',
             'reference' => 'nullable',
             'jardinier_id' => 'nullable|exists:jardiniers,id',
         ]);
+
+        $lastReservation = Reservation::orderBy('id', 'desc')->first();
+        $newReference = $lastReservation ? sprintf('%04d', intval($lastReservation->reference) + 1) : '0001';
+
         $reservation = new Reservation();
         $reservation->description_service = $request->input('description_service');
         $reservation->date_réservation = $request->input('date_réservation');
         $reservation->client = $request->input('client');
-        $reservation->feedback = $request->input('feedback');
-        $reservation->reference = $request->input('reference');
+        $reservation->reference = $newReference;
         $reservation->jardinier_id = $request->input('jardinier_id');
         $reservation->save();
 
         // dd('student created successfully');
-        return redirect ('/reservation');
+        return redirect ('/jardinier');
     }
 
     public function edit($id)
     {
-        $jardinier = Jardinier::find($id);
-        if (!$jardinier) {
-            return redirect()->route('jardinier.index')->with('error', 'Jardinier not found');
+        $reservation = Reservation::find($id);
+        if (!$reservation) {
+            return redirect()->route('reservation.index')->with('error', 'Jardinier not found');
         }
 
-        return view('jardinier.edit', [
-            'jardinier'=>$jardinier,
+        return view('reservation.edit', [
+            'reservation'=>$reservation,
         ]);
     }
 
@@ -64,7 +66,6 @@ class ReservationController extends Controller
            'description_service' => 'nullable',
             'date_réservation' => 'nullable',
             'client' => 'nullable',
-            'feedback' => 'nullable',
             'reference' => 'nullable',
             'jardinier_id' => 'nullable|exists:jardiniers,id',
         ]);
@@ -75,7 +76,6 @@ class ReservationController extends Controller
         $reservation->description_service = $request->input('description_service');
         $reservation->date_réservation = $request->input('date_réservation');
         $reservation->client = $request->input('client');
-        $reservation->feedback = $request->input('feedback');
         $reservation->reference = $request->input('reference');
         $reservation->jardinier_id = $request->input('jardinier_id');
         $reservation->save();

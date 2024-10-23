@@ -22,8 +22,8 @@ class JardinierFactory extends Factory
             'prenom'=> fake()->name(),
             'telephone'=> fake()->phoneNumber(),
             'localisation'=>fake()->name(),
-            'horaire'=> fake()->date(),
-            'cout'=> $this->faker->name(),
+            'horaire'=> fake()->time(),
+            'cout'=> $this->faker->randomNumber(3),
             'specialite'=> fake()->randomElement(['Paysagiste','Jardinier d’entretien','fleuriste',' Jardinier horticole','Arboriculteur']),
         ];
     }
