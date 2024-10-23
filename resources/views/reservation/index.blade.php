@@ -33,17 +33,19 @@
                     <td>{{ $reservation->jardinier->nom }}</td>
                     <td class="action-buttons">
                         <!-- Edit Button -->
-                        <a href="{{ route('reservation.edit', $reservation->id) }}" class="btn btn-edit btn-sm">
-                            <i class="fas fa-edit"></i>Edit
+                        <<a href="{{ route('reservation.edit', $reservation->id) }}" class="btn btn-sm" style="background-color: #3498db; color: white; border: none;">
+                            Edit
                         </a>
+                        
 
                         <!-- Delete Form/Button -->
                         <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-delete btn-sm" onclick="return confirm('Are you sure you want to delete this reservation?');">
-                                <i class="fas fa-trash"></i>Delete
+                            <button type="submit" class="btn btn-sm" style="background-color: #e74c3c; color: white; border: none;" onclick="return confirm('Are you sure you want to delete this reservation?');">
+                                <i class="fas fa-trash" style="margin-right: 5px;"></i> Delete
                             </button>
+                            
                         </form>
                     </td>
                 </tr>

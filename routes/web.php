@@ -26,7 +26,7 @@ Route::prefix('')->controller(ReservationController::class)->group(function(){
     Route::get('reservation-create', 'create')->name('reservation.create');
     Route::post('reservation/store', 'store')->name('reservation.store');
     Route::get('reservation-edit-{reservationId}', 'edit')->name('reservation.edit');
-    Route::post('reservation/update/{reservationId}','update')->name('reservation.update');
+    Route::post('reservation-update/{reservationId}','update')->name('reservation.update');
     Route::delete('reservation/delete/{reservationId}', 'destroy')->name('reservation.destroy');
     Route::get('reservation-show-{reservationId}', 'show')->name('reservation.show');
 });

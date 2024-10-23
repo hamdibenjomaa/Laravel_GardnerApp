@@ -37,17 +37,19 @@
                     <td>{{ $jardinier->specialite }}</td>
                     <td class="action-buttons">
                         <!-- Edit Button -->
-                        <a href="{{ route('jardinier.edit', $jardinier->id) }}" class="btn btn-edit btn-sm">
-                            <i class="fas fa-edit"></i>Edit
+                        <a href="{{ route('jardinier.edit', $jardinier->id) }}" class="btn btn-sm" style="background-color: #3498db; color: white; border: none;">
+                            <i class="fas fa-edit" style="margin-right: 5px;"></i> Edit
                         </a>
+                        
 
                         <!-- Delete Form/Button -->
                         <form action="{{ route('jardinier.destroy', $jardinier->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-delete btn-sm" onclick="return confirm('Are you sure you want to delete this jardinier?');">
-                                <i class="fas fa-trash"></i>Delete
+                            <button type="submit" class="btn btn-sm" style="background-color: #e74c3c; color: white; border: none;" onclick="return confirm('Are you sure you want to delete this jardinier?');">
+                                <i class="fas fa-trash" style="margin-right: 5px;"></i> Delete
                             </button>
+                            
                         </form>
                     </td>
                 </tr>

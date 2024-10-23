@@ -53,9 +53,10 @@ class ReservationController extends Controller
         if (!$reservation) {
             return redirect()->route('reservation.index')->with('error', 'Jardinier not found');
         }
-
+        $jardiniers = Jardinier::all();
         return view('reservation.edit', [
             'reservation'=>$reservation,
+            'jardiniers'=>$jardiniers,
         ]);
     }
 
@@ -66,17 +67,15 @@ class ReservationController extends Controller
            'description_service' => 'nullable',
             'date_réservation' => 'nullable',
             'client' => 'nullable',
-            'reference' => 'nullable',
             'jardinier_id' => 'nullable|exists:jardiniers,id',
         ]);
 
         $reservation = Reservation::findOrfail($id);
 
-        $reservation = new Reservation();
+        // $reservation = new Reservation();
         $reservation->description_service = $request->input('description_service');
         $reservation->date_réservation = $request->input('date_réservation');
         $reservation->client = $request->input('client');
-        $reservation->reference = $request->input('reference');
         $reservation->jardinier_id = $request->input('jardinier_id');
         $reservation->save();
 

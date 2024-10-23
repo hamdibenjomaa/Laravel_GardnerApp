@@ -23,17 +23,28 @@
     </div>
 
     <!-- Horaire -->
-    <div class="form-group mb-4">
+    {{-- <div class="form-group mb-4">
         <label for="reference">reference</label>
         <input type="text" id="reference" name="reference" class="form-control form-control-lg" value="{{ $reservation->reference }}">
-    </div>
+    </div> --}}
 
     <!-- Cout -->
-    <div class="form-group mb-4">
+    {{-- <div class="form-group mb-4">
         <label for="jardinier_id">jardinier</label>
-        <input id="jardinier_id" name="jardinier_id" class="form-control form-control-lg" value="{{ $reservation->jardinier->nom }}">
-    </div>    
-
+        <input id="jardinier_id" name="jardinier_id" class="form-control form-control-lg" value="{{ $reservation->jardinier_id }}">
+    </div>     --}}
+    <div class="form-group mb-4">
+        <label for="jardinier_id" class="form-label">Jardinier</label>
+        <select id="jardinier_id" name="jardinier_id" class="custom-select">
+            @foreach ($jardiniers as $jardinier)
+                <option value="{{ $jardinier->id }}" 
+                    {{ (old('jardinier_id') ?? $reservation->jardinier_id) == $jardinier->id ? 'selected' : '' }}>
+                    {{ $jardinier->nom }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 @endsection
