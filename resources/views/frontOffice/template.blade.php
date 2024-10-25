@@ -56,12 +56,27 @@
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">Blog</a>
                 <a href="service.html" class="nav-item nav-link">Formation</a>
-                <a href="project.html" class="nav-item nav-link">Nos Partenaires</a>
+                <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
+
                 <a href="project.html" class="nav-item nav-link">Evenements</a>
                 <a href="project.html" class="nav-item nav-link">Nos Equipes</a>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Sign In<i class="fa fa-arrow-right ms-3"></i></a>
+            @if (Auth::check())
+    <!-- Display Logout Button -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+            Logout <i class="fa fa-arrow-right ms-3"></i>
+        </button>
+    </form>
+@else
+    <!-- Display Sign In Button -->
+    <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+        Sign In <i class="fa fa-arrow-right ms-3"></i>
+    </a>
+@endif
+
         </div>
     </nav>
     <!-- Navbar End -->
@@ -384,7 +399,18 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="bg-white rounded p-4 p-sm-5 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="display-5 text-center mb-5">Get A Free Quote</h1>
+                    @if (Auth::check())
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+            Logout
+        </button>
+    </form>
+@else
+    <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+        Sign In
+    </a>
+@endif
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <div class="form-floating">

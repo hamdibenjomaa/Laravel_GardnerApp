@@ -61,7 +61,13 @@ class CartController extends Controller
         $cart = Auth::user()->cart;
     
         if (!$cart || $cart->items->isEmpty()) {
-            return view('cart.show', ['cartItems' => [], 'total' => 0, 'discount' => 0]);
+            // Set default values for empty cart
+            return view('cart.show', [
+                'cartItems' => [],
+                'total' => 0,
+                'discount' => 0,
+                'totalAfterDiscount' => 0 
+            ]);
         }
     
         $cartItems = $cart->items->map(function ($cartItem) {
@@ -107,13 +113,13 @@ public function checkout()
 
     $totalCost = $cartItems->sum(fn($item) => $item->item->cost * $item->quantity);
     $discount = session('discount', 0);
-    $totalAfterDiscount = $totalCost - ($totalCost * $discount / 100); // Calculate total after discount
+    $totalAfterDiscount = $totalCost - ($totalCost * $discount / 100); 
 
     if (Auth::user()->balance < $totalAfterDiscount) {
         return redirect()->route('cart.show')->with('error', 'Insufficient balance.');
     }
 
-    return view('cart.confirm', compact('cartItems', 'totalAfterDiscount', 'discount')); // Pass discount to view if needed
+    return view('cart.confirm', compact('cartItems', 'totalAfterDiscount', 'discount')); 
 }
 
 
@@ -129,10 +135,10 @@ public function confirmCheckout(Request $request)
         return redirect()->route('cart.show')->with('error', 'Your cart is empty.');
     }
 
-    // Calculate the total amount after discount
+
     $totalCost = $cartItems->sum(fn($item) => $item->item->cost * $item->quantity);
     $discount = session('discount', 0);
-    $totalAmount = $totalCost - ($totalCost * $discount / 100); // Use total after discount
+    $totalAmount = $totalCost - ($totalCost * $discount / 100); 
 
     $user = Auth::user();
 
@@ -142,7 +148,7 @@ public function confirmCheckout(Request $request)
 
     DB::beginTransaction();
     try {
-        $user->decrement('balance', $totalAmount); // Decrement the balance using the discounted amount
+        $user->decrement('balance', $totalAmount); 
 
         foreach ($cartItems as $cartItem) {
             $item = $cartItem->item;

@@ -79,7 +79,7 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link active">Services</a>
+                <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
                 <a href="project.html" class="nav-item nav-link">Projects</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -93,7 +93,20 @@
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Get A Quote<i class="fa fa-arrow-right ms-3"></i></a>
+            @if (Auth::check())
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+            Logout
+        </button>
+    </form>
+@else
+    <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+        Sign In
+    </a>
+@endif
+
+
         </div>
     </nav>
     <!-- Navbar End -->

@@ -68,12 +68,17 @@
             </table>
 
             <div class="text-end">
-                <h3>Subtotal: ${{ number_format($total, 2) }}</h3>
-                <h4 id="discountDisplay">Discount: {{ $discount }}%</h4>
-                <h3 id="totalAfterDiscountDisplay">Total after Discount: ${{ number_format($totalAfterDiscount, 2) }}</h3>
-                <a href="{{ route('cart.checkout') }}" class="btn btn-primary mt-3">Proceed to Checkout</a>
-                <a href="{{ route('providers.index') }}" class="btn btn-secondary mt-3">Continue Shopping</a>
-            </div>
+    <h3>Subtotal: ${{ number_format($total, 2) }}</h3>
+    <h4 id="discountDisplay">Discount: {{ $discount }}%</h4>
+    @if (count($cartItems) > 0)
+        <h3 id="totalAfterDiscountDisplay">Total after Discount: ${{ number_format($totalAfterDiscount, 2) }}</h3>
+    @else
+        <h3 id="totalAfterDiscountDisplay">Total after Discount: $0.00</h3>
+    @endif
+    <a href="{{ route('cart.checkout') }}" class="btn btn-primary mt-3">Proceed to Checkout</a>
+    <a href="{{ route('providers.index') }}" class="btn btn-secondary mt-3">Continue Shopping</a>
+</div>
+
         @else
             <p>Your cart is empty.</p>
             <a href="{{ route('providers.index') }}" class="btn btn-secondary mt-3">Continue Shopping</a>
@@ -114,18 +119,18 @@
         });
     </script>
     <script>
-    document.querySelector('.btn-primary').addEventListener('click', function(event) {
-        event.preventDefault();
-        const totalAmount = {{ $totalAfterDiscount }};
-        const userBalance = {{ Auth::user()->balance }};
-        
-        if (userBalance < totalAmount) {
-            alert('Insufficient balance!');
-            return;
-        }
+document.querySelector('.btn-primary').addEventListener('click', function(event) {
+    event.preventDefault();
+    const totalAmount = {{ $totalAfterDiscount }};
+    const userBalance = {{ Auth::user()->balance }};
+    
+    if (userBalance < totalAmount) {
+        alert('Insufficient balance!');
+        return;
+    }
+    window.location.href = this.href; 
+});
 
-     
-    });
 </script>
 </body>
 </html>
