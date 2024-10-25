@@ -12,6 +12,7 @@ Route::get('/', function () {
 Route::prefix('')->controller(JardinierController::class)->group(function(){
     Route::get('jardinier-home', 'home')->name('jardinier.home');
     Route::get('jardinier', 'index')->name('jardinier.index');
+    Route::get('jardiniers/autocomplete', 'autocomplete')->name('jardinier.autocomplete');
     Route::get('jardinier-admin', 'indexAdmin')->name('jardinier.indexAdmin');
     Route::get('jardinier-create', 'create')->name('jardinier.create');
     Route::post('jardinier-store', 'store')->name('jardinier.store');

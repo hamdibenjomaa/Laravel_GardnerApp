@@ -33,7 +33,7 @@
                     <td>{{ $reservation->jardinier->nom }}</td>
                     <td class="action-buttons">
                         <!-- Edit Button -->
-                        <<a href="{{ route('reservation.edit', $reservation->id) }}" class="btn btn-sm" style="background-color: #3498db; color: white; border: none;">
+                        <a href="{{ route('reservation.edit', $reservation->id) }}" class="btn btn-sm" style="background-color: #3498db; color: white; border: none;">
                             Edit
                         </a>
                         

@@ -7,6 +7,21 @@
             <i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Jardinier
         </a>
     </div>
+        
+    <div class="container mb-4">
+        <form action="{{ route('jardinier.indexAdmin') }}" method="GET">
+            <div class="input-group">
+                <input type="text" id="search" name="search" class="form-control" placeholder="Search jardiniers by name, speciality, or location..." value="{{ request('search') }}" autocomplete="off">
+                <div id="search-results" class="autocomplete-dropdown"></div>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Autocomplete Dropdown -->
+        <ul id="search-suggestions" class="list-group"></ul>
+    </div>
 
     <!-- Jardinier Table -->
     <div class="container">
@@ -57,4 +72,40 @@
             </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function () {
+            // Handle dynamic autocomplete
+            $('#search').on('input', function () {
+                var query = $(this).val();
+
+                if (query.length > 2) {
+                    $.ajax({
+                        url: "{{ route('jardinier.autocomplete') }}",
+                        type: "GET",
+                        data: { query: query },
+                        success: function (data) {
+                            $('#search-suggestions').empty();
+
+                            if (data.length > 0) {
+                                data.forEach(function (jardinier) {
+                                    $('#search-suggestions').append('<li class="list-group-item">' + jardinier.nom + ' ' + jardinier.prenom + '</li>');
+                                });
+                            } else {
+                                $('#search-suggestions').append('<li class="list-group-item">No results found</li>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#search-suggestions').empty();
+                }
+            });
+
+            // Clicking a suggestion will populate the search field
+            $(document).on('click', '.list-group-item', function () {
+                var selected = $(this).text();
+                $('#search').val(selected);
+                $('#search-suggestions').empty();
+            });
+        });
+    </script>
 @endsection

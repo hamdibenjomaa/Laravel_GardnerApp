@@ -8,14 +8,68 @@ use Illuminate\Validation\Rule;
 
 class JardinierController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jardiniers = Jardinier::all();
-        return view('jardinier.index',compact('jardiniers'));
+        $search = $request->input('search');
+
+    $jardiniersQuery = Jardinier::query()
+        ->when($search, function ($query, $search) {
+            $terms = explode(' ', $search); // Split search query into terms
+            foreach ($terms as $term) {
+                $query->where(function ($query) use ($term) {
+                    $query->where('nom', 'like', '%' . $term . '%')
+                        ->orWhere('prenom', 'like', '%' . $term . '%')
+                        ->orWhere('localisation', 'like', '%' . $term . '%')
+                        ->orWhere('specialite', 'like', '%' . $term . '%');
+                });
+            }
+        });
+
+    $jardiniers = $jardiniersQuery->get(); // Retrieve results
+
+    if ($request->ajax()) {
+        return response()->json(['html' => view('jardinier.dynamic-index', compact('jardiniers'))->render()]);
     }
-    public function indexAdmin()
+
+        return view('jardinier.index', compact('jardiniers'));
+    }
+
+    public function autocomplete(Request $request)
     {
-        $jardiniers = Jardinier::all();
+        $search = $request->get('query');
+        $results = Jardinier::where('nom', 'like', '%' . $search . '%')
+            ->orWhere('prenom', 'like', '%' . $search . '%')
+            ->orWhere('localisation', 'like', '%' . $search . '%')
+            ->orWhere('specialite', 'like', '%' . $search . '%')
+            ->limit(5)
+            ->get();
+
+        return response()->json($results);
+    }
+
+
+    public function indexAdmin(Request $request)
+    {
+        $search = $request->input('search');
+
+        $jardiniersQuery = Jardinier::query()
+            ->when($search, function ($query) use ($search) {
+                $terms = explode(' ', $search); // Split search query into terms
+                foreach ($terms as $term) {
+                    $query->where(function ($query) use ($term) {
+                        $query->where('nom', 'like', '%' . $term . '%')
+                            ->orWhere('prenom', 'like', '%' . $term . '%')
+                            ->orWhere('localisation', 'like', '%' . $term . '%')
+                            ->orWhere('specialite', 'like', '%' . $term . '%');
+                    });
+                }
+            });
+
+        $jardiniers = $jardiniersQuery->paginate();
+
+        if ($request->ajax()) {
+            return view('jardinier.dynamic-index', compact('jardiniers'))->render();
+        }
         return view('jardinier.indexAdmin',compact('jardiniers'));
     }
 
@@ -31,12 +85,12 @@ class JardinierController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required',
-            'prenom' => 'required',
-            'telephone' => 'required',
-            'localisation' => 'nullable',
-            'horaire' => 'nullable',
-            'cout' => 'nullable',
+            'nom' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'prenom' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'telephone' => 'required|digits:8',
+            'localisation' => 'nullable|string|max:255',
+            'horaire' => 'nullable|string|max:255',
+            'cout' => 'nullable|numeric|min:0',
             'specialite' => ['required', Rule::in(['Paysagiste','Jardinier d’entretien','fleuriste',' Jardinier horticole','Arboriculteur'])],
             
         ]);
@@ -70,12 +124,12 @@ class JardinierController extends Controller
     {
 
         $request->validate([
-            'nom' => 'required',
-            'prenom' => 'required',
-            'telephone' => 'required',
-            'localisation' => 'nullable',
-            'horaire' => 'nullable',
-            'cout' => 'nullable',
+            'nom' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'prenom' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'telephone' => 'required|digits:8',
+            'localisation' => 'nullable|string|max:255',
+            'horaire' => 'nullable|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'cout' => 'nullable|numeric|min:0',
             'specialite' => ['required', Rule::in(['Paysagiste','Jardinier d’entretien','fleuriste',' Jardinier horticole','Arboriculteur'])],
        
         ]);
