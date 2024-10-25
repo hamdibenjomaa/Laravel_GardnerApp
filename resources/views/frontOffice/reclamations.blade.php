@@ -11,7 +11,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Actions</th>
@@ -20,7 +19,6 @@
         <tbody>
             @foreach ($reclamations as $reclamation)
                 <tr>
-                    <td>{{ $reclamation->id }}</td>
                     <td>{{ $reclamation->title }}</td>
                     <td>{{ $reclamation->description }}</td>
                     <td>

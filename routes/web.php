@@ -1,22 +1,41 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReclamationController;
 use App\Http\Controllers\ResponseController;
-
-
 
 Route::get('/', function () {
     return view('frontOffice.home');
 });
 
-Route::get('/Admin', function () {
-    return view('backOffice.template');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 Route::resource('reclamations', ReclamationController::class);
-// Route::get('/reclamations', [ReclamationController::class, 'index'])->name('frontOffice.reclamations');
+// BackOffice section for reclamations
+Route::prefix('backOffice')->middleware('auth')->group(function () {
+    Route::get('/reclamations', [ReclamationController::class, 'home'])->name('backOffice.reclamations.home');
     Route::get('/Addrec', [ReclamationController::class, 'create'])->name('reclamations.add');
-    Route::get('/updateReclamations{id}', [ReclamationController::class, 'edit'])->name('reclamations.edit');
+    Route::get('/reclamations/{id}/edit', [ReclamationController::class, 'editResponse'])->name('backOffice.Reclamation.edit');
+    Route::put('/reclamations/{id}/update', [ReclamationController::class, 'updateResponse'])->name('backOffice.Reclamation.update');
+
+     Route::delete('/reclamations/{id}', [ReclamationController::class, 'destroy'])->name('reclamations.destroy');
+});    
+
+Route::get('/Addrec', [ReclamationController::class, 'create'])->name('reclamations.add');
+    Route::get('/updateReclamations/{id}', [ReclamationController::class, 'edit'])->name('reclamations.edit');
     Route::delete('/reclamations/{id}', [ReclamationController::class, 'destroy'])->name('reclamations.destroy');
 
 // Nested resource route for responses under reclamations
@@ -31,8 +50,17 @@ Route::put('/reclamations/{reclamation}/responses/{response}', [ResponseControll
 Route::delete('/reclamations/{reclamation}/responses/{response}', [ResponseController::class, 'destroy'])->name('reclamations.responses.destroy');
 
 
+Route::delete('/backoffice/reclamations/{reclamation}/responses/{response}', [ResponseController::class, 'destroy1'])->name('backOffice.responses.destroy1');  
+
+Route::prefix('backOffice/reclamations')->name('backOffice.reclamations.')->group(function () {
+    Route::get('{reclamation_id}/responses', [ResponseController::class, 'showBackOfficeResponses'])
+        ->name('responses.show');
+});
+Route::post('/backoffice/reclamations/{reclamation_id}/responses', [ResponseController::class, 'storeResponse'])->name('backOffice.responses.store');
+Route::get('/backoffice/reclamations/{reclamation_id}/responses/create', [ResponseController::class, 'createResponse'])->name('backOffice.responses.create');
 
 
+require __DIR__.'/auth.php';
 
 Route::middleware([
     'auth:sanctum',

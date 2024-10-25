@@ -79,7 +79,13 @@
                         </a>
                     </li>
 
-
+                    <li class="sidebar-item">
+                    <a class="sidebar-link active" href="{{ route('backOffice.reclamations.home') }} " aria-expanded="false">                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Reclamations </span>
+                        </a>
+                    </li>   
 
                 </ul>
 

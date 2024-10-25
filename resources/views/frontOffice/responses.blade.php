@@ -13,7 +13,6 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Message</th>
                 <th>Actions</th>
             </tr>
@@ -21,14 +20,13 @@
         <tbody>
             @foreach ($responses as $response)
                 <tr>
-                    <td>{{ $response->id }}</td>
                     <td>{{ $response->message }}</td>
                     <td>
                     <a href="{{ route('reclamations.responses.edit', ['reclamation' => $reclamation->id, 'response' => $response->id]) }}" class="btn btn-warning">Edit Response</a>
-                    <form action="{{ route('reclamations.responses.destroy', ['reclamation' => $reclamation->id, 'response' => $response->id]) }}" method="POST">
+                    <!-- <form action="{{ route('reclamations.responses.destroy', ['reclamation' => $reclamation->id, 'response' => $response->id]) }}" method="POST">
                    @csrf
                    @method('DELETE')
-                   <button type="submit" class="btn btn-danger">Delete</button>
+                   <button type="submit" class="btn btn-danger">Delete</button> -->
                    </form>
 
                     </td>
