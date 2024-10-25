@@ -79,5 +79,14 @@ public function history()
     return $this->hasMany(History::class);
 }
 
+public function isAdmin()
+{
+    return $this->role === 'admin';
+}
+
+public function isUser()
+{
+    return $this->role === 'user';
+}
 
 }
