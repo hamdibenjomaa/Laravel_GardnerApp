@@ -133,7 +133,7 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="subject">Subject:</label>
+                <label for="subject">Sujet :</label>
                 <input type="text" id="subject" name="subject" class="form-control" value="{{ old('subject', $reclamation->subject) }}">
             </div>
 
@@ -142,7 +142,7 @@
                 <textarea id="description" name="description" class="form-control">{{ old('description', $reclamation->description) }}</textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>
                 <div class="py-6 px-6 text-center fixed-bottom">

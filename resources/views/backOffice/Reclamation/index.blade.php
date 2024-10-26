@@ -8,6 +8,8 @@
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -128,17 +130,32 @@
             </header>
             <!--  Header End -->
 
-            <a href="{{ route('reclamations.add') }}" class="btn btn-primary">Add Reclamation</a>
+            <!-- <a href="{{ route('reclamations.add') }}" class="btn btn-primary">Add Reclamation</a> -->
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
         
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1>liste des reclamations </h1>
+
+            <div class="d-flex mb-4">
+             <form action="{{ route('reclamations.index1') }}" method="GET">
+              <input type="text" name="email" class="form-control mr-2" placeholder="recherche par email" value="{{ request('email') }}">
+              <button type="submit" class="btn btn-primary">rechercher</button>
+            </form>
+          </div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>Titre</th>
                         <th>Description</th>
+                        <th>Reclamteur</th>
+                        <th>categorie</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -147,19 +164,79 @@
                         <tr>
                             <td>{{ $reclamation->title }}</td>
                             <td>{{ $reclamation->description }}</td>
+                            <td>{{ $reclamation->user->email }}</td>
+                            <td>{{ $reclamation->category ? $reclamation->category->name : 'No Category' }}</td>
+
+
                             <td>
-                                <a href="{{ route('backOffice.Reclamation.edit', $reclamation->id) }}" class="btn btn-warning">Edit</a>
+                                <!-- <a href="{{ route('backOffice.Reclamation.edit', $reclamation->id) }}" class="btn btn-warning">Edit</a> -->
                                 <form action="{{ route('reclamations.destroy', $reclamation->id) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">supprimer</button>
                                 </form>
-                                <a href="{{ route('backOffice.reclamations.responses.show', $reclamation->id) }}">View Responses</a>
+                                <a href="{{ route('backOffice.reclamations.responses.show', $reclamation->id) }}"class="btn btn-info">Voir les Responses</a>
                                 </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+            <div class="container my-5">
+    <h3>Pourcentages des reclamations par categorie</h3>
+    <canvas id="reclamationChart" width="20" height="5"></canvas>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const reclamationData = @json($data);
+
+    // Extract labels and data from the reclamationData array
+    const labels = reclamationData.map(item => item.category);
+    const percentages = reclamationData.map(item => item.percentage);
+
+    const ctx = document.getElementById('reclamationChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar', // or 'doughnut'
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Reclamation Percentage by Category',
+                data: percentages,
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                ],
+                hoverBackgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            return `${label}: ${value}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100 // Assuming percentages are calculated correctly
+                }
+            }
+        }
+    });
+});
+
+</script>
 
                 <div class="py-6 px-6 text-center fixed-bottom">
                     <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
@@ -175,6 +252,7 @@
     <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
     <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
     <script src="../assets/js/dashboard.js"></script>
+
 </body>
 
 </html>

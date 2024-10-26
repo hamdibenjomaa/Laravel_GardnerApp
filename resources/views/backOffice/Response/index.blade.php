@@ -33,6 +33,46 @@
                                 <span class="hide-menu">Users</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Blogs</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Foramtions</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Partenaires</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Evenements</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Equipes</span>
+                        </a>
+                    </li>
                         <!-- More Sidebar Items -->
                         <li class="sidebar-item">
                             <a class="sidebar-link active" href="{{ route('backOffice.reclamations.home') }}" aria-expanded="false">

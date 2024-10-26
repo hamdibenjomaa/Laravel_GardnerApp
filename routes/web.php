@@ -58,6 +58,7 @@ Route::prefix('backOffice/reclamations')->name('backOffice.reclamations.')->grou
 });
 Route::post('/backoffice/reclamations/{reclamation_id}/responses', [ResponseController::class, 'storeResponse'])->name('backOffice.responses.store');
 Route::get('/backoffice/reclamations/{reclamation_id}/responses/create', [ResponseController::class, 'createResponse'])->name('backOffice.responses.create');
+Route::get('/backoffice/reclamations', [ReclamationController::class, 'index1'])->name('reclamations.index1');
 
 
 require __DIR__.'/auth.php';

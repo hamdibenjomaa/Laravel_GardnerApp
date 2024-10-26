@@ -10,6 +10,6 @@
             <textarea name="message" class="form-control" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 @endsection

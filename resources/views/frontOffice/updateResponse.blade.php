@@ -1,7 +1,7 @@
 @extends('frontOffice.template')
 
 @section('content') 
-    <h1>Edit Response</h1>
+    <h1>Modifier laResponse</h1>
 
     <form action="{{ route('reclamations.responses.update', [$reclamation_id, $response->id]) }}" method="POST">
         @csrf
@@ -12,6 +12,6 @@
             <textarea name="message" class="form-control" required>{{ $response->message }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
 @endsection

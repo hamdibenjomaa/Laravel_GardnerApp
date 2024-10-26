@@ -6,9 +6,12 @@ use App\Models\Response;
 use App\Models\Reclamation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
+
 
 class ResponseController extends Controller
 {
+
     /**
      * Display a listing of the responses for a specific reclamation.
      */
