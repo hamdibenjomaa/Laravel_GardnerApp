@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blogs', function (Blueprint $table) {
-            $table->id(); // Primary key
-            $table->string('title'); // Blog title
-            $table->text('content'); // Blog content
-            $table->enum('type', ['thought', 'question', 'recommendation', 'advice', 'joke']); // Enum for blog type
-            $table->date('blogDate'); // Blog date
-            $table->timestamps(); // Created and updated timestamps
+            $table->id();
+            $table->string('title');
+            $table->text('content');
+            $table->enum('type', ['thought', 'question', 'recommendation', 'advice', 'joke']);
+            $table->date('blogDate');
+            $table->string('image')->nullable(); // Add image column
+            $table->timestamps();
         });
     }
 

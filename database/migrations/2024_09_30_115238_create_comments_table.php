@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('comments', function (Blueprint $table) {
-            $table->id(); // Primary key
-            $table->foreignId('blog_id')->constrained()->onDelete('cascade'); // Foreign key to blogs table
-            $table->text('content'); // Comment content
-            $table->date('dateComment'); // Date of the comment
-            $table->timestamps(); // Created and updated timestamps
+            $table->id();
+            $table->foreignId('blog_id')->constrained()->onDelete('cascade');
+            $table->text('content');
+            $table->date('dateComment');
+            $table->string('image')->nullable(); // Add image column
+            $table->timestamps();
         });
     }
 

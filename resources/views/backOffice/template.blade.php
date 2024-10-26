@@ -133,6 +133,8 @@
         <!--  Header End -->
         <div class="container-fluid">
 
+            @yield('blogs') <!-- This is where content from other views will go -->
+
 
             <div class="py-6 px-6 text-center fixed-bottom">
                 <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>

@@ -59,9 +59,9 @@
                 <a href="project.html" class="nav-item nav-link">Nos Partenaires</a>
                 <a href="project.html" class="nav-item nav-link">Evenements</a>
                 <a href="project.html" class="nav-item nav-link">Nos Equipes</a>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="/contact" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Sign In<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="/login" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Sign In<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -71,6 +71,7 @@
     @yield('blogs') <!-- This is where content from other views will go -->
     @yield('addBlog') <!-- This is where content from other views will go -->
 
+    @yield('contact') <!-- This is where content from other views will go -->
 
 
     <!-- Footer Start -->
