@@ -54,34 +54,38 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">Blog</a>
-                <a href="service.html" class="nav-item nav-link">Formation</a>
-                <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
+                <a href="{{ route('frontOffice.blogs') }}" class="nav-item nav-link">Blog</a>
+                <a href="{{ route('forms') }}" class="nav-item nav-link">Formation</a>
 
-                <a href="project.html" class="nav-item nav-link">Evenements</a>
-                <a href="project.html" class="nav-item nav-link">Nos Equipes</a>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+
+
+                <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
+                <a href="# " class="nav-item nav-link">Evenements</a>
+                <a href="{{ route('reclamations.add') }}" class="nav-item nav-link">Reclamation</a>
+                <a href="{{ route('frontOffice.contact') }}" class="nav-item nav-link">Contact</a>
             </div>
             @if (Auth::check())
-    <!-- Display Logout Button -->
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
         @csrf
         <button type="submit" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
-            Logout <i class="fa fa-arrow-right ms-3"></i>
+            Logout
         </button>
     </form>
 @else
-    <!-- Display Sign In Button -->
     <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
-        Sign In <i class="fa fa-arrow-right ms-3"></i>
+        Sign In
     </a>
 @endif
-
         </div>
     </nav>
     <!-- Navbar End -->
 
 
+    @yield('content') <!-- This is where content from other views will go -->
+    @yield('blogs') <!-- This is where content from other views will go -->
+    @yield('addBlog') <!-- This is where content from other views will go -->
+
+    @yield('contact')
     <!-- Carousel Start -->
     <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
@@ -176,7 +180,7 @@
     </div>
     <!-- Top Feature End -->
 
-
+    @yield('content')
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
@@ -399,18 +403,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="bg-white rounded p-4 p-sm-5 wow fadeIn" data-wow-delay="0.5s">
-                    @if (Auth::check())
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-        @csrf
-        <button type="submit" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
-            Logout
-        </button>
-    </form>
-@else
-    <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
-        Sign In
-    </a>
-@endif
+                        <h1 class="display-5 text-center mb-5">Get A Free Quote</h1>
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <div class="form-floating">
@@ -718,6 +711,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    
 </body>
 
 </html>

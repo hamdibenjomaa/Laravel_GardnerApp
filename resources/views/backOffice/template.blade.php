@@ -28,7 +28,6 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                 <ul id="sidebarnav">
-
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="./index.html" aria-expanded="false">
                         <span>
@@ -38,50 +37,55 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('backOffice.blogs') }}"  aria-expanded="false">
                         <span>
                           <i class="ti ti-layout-dashboard"></i>
                         </span>
                             <span class="hide-menu">Blogs</span>
                         </a>
-                    </li>
+                        <li class="sidebar-item">
+    <a class="sidebar-link" href="{{ url('/inscrits') }}" aria-expanded="false">
+        <span>
+            <i class="ti ti-list"></i> <!-- You can change the icon to any suitable one -->
+        </span>
+        <span class="hide-menu">Inscriptions</span>
+    </a>
+</li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                        <span>
-                          <i class="ti ti-layout-dashboard"></i>
-                        </span>
-                            <span class="hide-menu">Foramtions</span>
-                        </a>
-                    </li>
+     <a class="sidebar-link" href="{{ route('formations.index') }}" aria-expanded="false">
+        <span>
+            <i class="ti ti-layout-grid"></i>
+        </span>
+        <span class="hide-menu"> Formations</span>
+    </a>
+</li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                        <span>
-                          <i class="ti ti-layout-dashboard"></i>
-                        </span>
+                        <a class="sidebar-link" href="{{ route('backOffice.providers.home') }}"  aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
                             <span class="hide-menu">Partenaires</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                        <span>
-                          <i class="ti ti-layout-dashboard"></i>
-                        </span>
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
                             <span class="hide-menu">Evenements</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                        <span>
-                          <i class="ti ti-layout-dashboard"></i>
-                        </span>
-                            <span class="hide-menu">Equipes</span>
+                        <a class="sidebar-link" href="{{ route('reclamations.index1') }}"  aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            <span class="hide-menu">reclamation</span>
                         </a>
                     </li>
-
-
-
                 </ul>
-
             </nav>
             <!-- End Sidebar navigation -->
         </div>
@@ -99,7 +103,6 @@
                             <i class="ti ti-menu-2"></i>
                         </a>
                     </li>
-
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
@@ -122,7 +125,7 @@
                                         <i class="ti ti-list-check fs-6"></i>
                                         <p class="mb-0 fs-3">My Task</p>
                                     </a>
-                                    <a href="{{ route('logout') }}" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                 </div>
                             </div>
                         </li>
@@ -132,8 +135,17 @@
         </header>
         <!--  Header End -->
         <div class="container-fluid">
+            @yield('content') <!-- Add this line to yield the content from create.blade.php -->
 
+            @yield('blogs')
+            <div class="container-fluid">
 
+@yield('home') 
+@yield('jardinier') 
+@yield('show') 
+@yield('create') 
+@yield('edit') 
+</div>
             <div class="py-6 px-6 text-center fixed-bottom">
                 <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
             </div>

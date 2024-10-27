@@ -78,20 +78,14 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="index.html" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="{{ route('frontOffice.blogs') }}" class="nav-item nav-link">Blog</a>
+                <a href="{{ route('forms') }}" class="nav-item nav-link">Formation</a>
+
                 <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
-                <a href="project.html" class="nav-item nav-link">Projects</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu bg-light m-0">
-                        <a href="feature.html" class="dropdown-item">Features</a>
-                        <a href="quote.html" class="dropdown-item">Free Quote</a>
-                        <a href="team.html" class="dropdown-item">Our Team</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="# " class="nav-item nav-link">Evenements</a>
+                <a href="{{ route('reclamations.add') }}" class="nav-item nav-link">Reclamation</a>
+                <a href="{{ route('frontOffice.contact') }}" class="nav-item nav-link">Contact</a>
+
             </div>
             @if (Auth::check())
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">

@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
     $middleware->append(ResetCoupon::class);
     
+        //
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

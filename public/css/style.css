@@ -517,6 +517,7 @@ h6,
 
 .copyright a:hover {
     color: var(--primary);
+<<<<<<< HEAD
 }
 
 .modal {
@@ -558,4 +559,6 @@ h6,
 .table th, .table td {
     text-align: center;
     vertical-align: middle;
+=======
+>>>>>>> origin/formation
 }

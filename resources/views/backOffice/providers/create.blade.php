@@ -29,57 +29,66 @@
                 </div>
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
-                    <ul id="sidebarnav">
+                <ul id="sidebarnav">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Users</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('backOffice.blogs') }}"  aria-expanded="false">
+                        <span>
+                          <i class="ti ti-layout-dashboard"></i>
+                        </span>
+                            <span class="hide-menu">Blogs</span>
+                        </a>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu">Users</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu">Blogs</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu">Foramtions</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                        <a class="sidebar-link active" href="{{ route('backOffice.providers.home') }} " aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu ac">Partenaires</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu">Evenements</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-layout-dashboard"></i>
-                                </span>
-                                <span class="hide-menu">Equipes</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+    <a class="sidebar-link" href="{{ url('/inscrits') }}" aria-expanded="false">
+        <span>
+            <i class="ti ti-list"></i> <!-- You can change the icon to any suitable one -->
+        </span>
+        <span class="hide-menu">Inscriptions</span>
+    </a>
+</li>
+
+                    <li class="sidebar-item">
+     <a class="sidebar-link" href="{{ route('formations.index') }}" aria-expanded="false">
+        <span>
+            <i class="ti ti-layout-grid"></i>
+        </span>
+        <span class="hide-menu"> Formations</span>
+    </a>
+</li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('backOffice.providers.home') }}"  aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            <span class="hide-menu">Partenaires</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            <span class="hide-menu">Evenements</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('reclamations.index1') }}"  aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            <span class="hide-menu">reclamation</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
