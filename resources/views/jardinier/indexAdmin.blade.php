@@ -72,40 +72,75 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Plain JavaScript for Autocomplete -->
     <script>
-        $(document).ready(function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search');
+            const suggestionsList = document.getElementById('search-suggestions');
+            const jardinierList = document.getElementById('jardinier-list');
+            const form = document.querySelector('form');
+    
             // Handle dynamic autocomplete
-            $('#search').on('input', function () {
-                var query = $(this).val();
-
+            searchInput.addEventListener('input', function () {
+                const query = searchInput.value;
+    
                 if (query.length > 2) {
-                    $.ajax({
-                        url: "{{ route('jardinier.autocomplete') }}",
-                        type: "GET",
-                        data: { query: query },
-                        success: function (data) {
-                            $('#search-suggestions').empty();
-
+                    fetch(`{{ route('jardinier.autocomplete') }}?query=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionsList.innerHTML = ''; // Clear previous suggestions
+                            
                             if (data.length > 0) {
-                                data.forEach(function (jardinier) {
-                                    $('#search-suggestions').append('<li class="list-group-item">' + jardinier.nom + ' ' + jardinier.prenom + '</li>');
+                                data.forEach(jardinier => {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = `${jardinier.nom} ${jardinier.prenom}`;
+                                    listItem.classList.add('list-group-item');
+                                    suggestionsList.appendChild(listItem);
                                 });
                             } else {
-                                $('#search-suggestions').append('<li class="list-group-item">No results found</li>');
+                                const noResultsItem = document.createElement('li');
+                                noResultsItem.textContent = 'No results found';
+                                noResultsItem.classList.add('list-group-item');
+                                suggestionsList.appendChild(noResultsItem);
                             }
-                        }
-                    });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });
                 } else {
-                    $('#search-suggestions').empty();
+                    suggestionsList.innerHTML = ''; // Clear the suggestions when input is too short
                 }
             });
-
-            // Clicking a suggestion will populate the search field
-            $(document).on('click', '.list-group-item', function () {
-                var selected = $(this).text();
-                $('#search').val(selected);
-                $('#search-suggestions').empty();
+    
+            // When a suggestion is clicked, fill the search input and clear suggestions
+            suggestionsList.addEventListener('click', function (event) {
+                if (event.target && event.target.matches('li.list-group-item')) {
+                    searchInput.value = event.target.textContent;
+                    suggestionsList.innerHTML = ''; // Clear suggestions
+                }
+            });
+    
+            // Handle form submission dynamically (AJAX)
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+    
+                const query = searchInput.value;
+    
+                fetch(`{{ route('jardinier.index') }}?search=${query}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    jardinierList.innerHTML = data.html; // Update the table with the new content
+                })
+                .catch(error => {
+                    console.error('Error fetching dynamic search data:', error);
+                });
             });
         });
     </script>
+    
 @endsection

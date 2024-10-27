@@ -52,24 +52,24 @@ class JardinierController extends Controller
     {
         $search = $request->input('search');
 
-        $jardiniersQuery = Jardinier::query()
-            ->when($search, function ($query) use ($search) {
-                $terms = explode(' ', $search); // Split search query into terms
-                foreach ($terms as $term) {
-                    $query->where(function ($query) use ($term) {
-                        $query->where('nom', 'like', '%' . $term . '%')
-                            ->orWhere('prenom', 'like', '%' . $term . '%')
-                            ->orWhere('localisation', 'like', '%' . $term . '%')
-                            ->orWhere('specialite', 'like', '%' . $term . '%');
-                    });
-                }
-            });
+    $jardiniersQuery = Jardinier::query()
+        ->when($search, function ($query, $search) {
+            $terms = explode(' ', $search); // Split search query into terms
+            foreach ($terms as $term) {
+                $query->where(function ($query) use ($term) {
+                    $query->where('nom', 'like', '%' . $term . '%')
+                        ->orWhere('prenom', 'like', '%' . $term . '%')
+                        ->orWhere('localisation', 'like', '%' . $term . '%')
+                        ->orWhere('specialite', 'like', '%' . $term . '%');
+                });
+            }
+        });
 
-        $jardiniers = $jardiniersQuery->paginate();
+    $jardiniers = $jardiniersQuery->get(); // Retrieve results
 
-        if ($request->ajax()) {
-            return view('jardinier.dynamic-index', compact('jardiniers'))->render();
-        }
+    if ($request->ajax()) {
+        return response()->json(['html' => view('jardinier.dynamic-index', compact('jardiniers'))->render()]);
+    }
         return view('jardinier.indexAdmin',compact('jardiniers'));
     }
 
@@ -128,7 +128,7 @@ class JardinierController extends Controller
             'prenom' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
             'telephone' => 'required|digits:8',
             'localisation' => 'nullable|string|max:255',
-            'horaire' => 'nullable|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'horaire' => 'nullable|string|max:255',
             'cout' => 'nullable|numeric|min:0',
             'specialite' => ['required', Rule::in(['Paysagiste','Jardinier d’entretien','fleuriste',' Jardinier horticole','Arboriculteur'])],
        
