@@ -128,7 +128,7 @@ class JardinierController extends Controller
             'prenom' => 'required|string|regex:/^[a-zA-Z\s]+$/|max:255',
             'telephone' => 'required|digits:8',
             'localisation' => 'nullable|string|max:255',
-            'horaire' => 'nullable|string|regex:/^[a-zA-Z\s]+$/|max:255',
+            'horaire' => 'nullable|string',
             'cout' => 'nullable|numeric|min:0',
             'specialite' => ['required', Rule::in(['Paysagiste','Jardinier d’entretien','fleuriste',' Jardinier horticole','Arboriculteur'])],
        

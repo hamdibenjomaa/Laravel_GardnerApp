@@ -22,7 +22,8 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\ProfileController;
 
 
-
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\ParticipationController;
 
 
 Route::get('/', function () {
@@ -113,7 +114,7 @@ Route::prefix('')->controller(JardinierController::class)->group(function(){
     Route::get('jardinier-create', 'create')->name('jardinier.create');
     Route::post('jardinier-store', 'store')->name('jardinier.store');
     Route::get('jardinier-edit-{jardinierId}', 'edit')->name('jardinier.edit');
-    Route::put('jardinier-update/{jardinierId}','update')->name('jardinier.update');
+    Route::post('jardinier-update/{jardinierId}','update')->name('jardinier.update');
     Route::delete('jardinier-delete/{jardinierId}', 'destroy')->name('jardinier.destroy');
     Route::get('jardinier-show-{jardinierId}', 'show')->name('jardinier.show');
     Route::get('jardinier-showadmin-{jardinierId}', 'showAdmin')->name('jardinier.showAdmin');
@@ -215,3 +216,36 @@ Route::prefix('backOffice/reclamations')->name('backOffice.reclamations.')->grou
 Route::post('/backoffice/reclamations/{reclamation_id}/responses', [ResponseController::class, 'storeResponse'])->name('backOffice.responses.store');
 Route::get('/backoffice/reclamations/{reclamation_id}/responses/create', [ResponseController::class, 'createResponse'])->name('backOffice.responses.create');
 Route::get('/backoffice/reclamations', [ReclamationController::class, 'home'])->name('reclamations.index1');
+
+
+
+// ghada 
+
+// Route for listing all events
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+// Route for listing all events
+Route::get('/Back/events', [EventController::class, 'Backindex'])->name('BackOffice.events.index');
+
+// Route for showing the form to create a new event
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
+// Route for storing a new event
+Route::post('/events', [EventController::class, 'store'])->name('events.store');
+
+// Route for showing a single event
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+
+// Route for showing the form to edit an event
+Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('events.edit');
+
+// Route for updating an event
+Route::put('/events/{id}', [EventController::class, 'update'])->name('events.update');
+
+// Route for deleting an event
+Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('events.destroy');
+
+// Route for participating in an event
+Route::post('/events/{id}/participate', [EventController::class, 'participate'])->name('events.participate');
+Route::get('/Back/events/{id}/participants', [ParticipationController::class, 'showParticipants'])->name('BackOffice.events.participants'); 
+// Route for dynamic search by date
+Route::get('/events/search', [EventController::class, 'searchByDate'])->name('events.search');

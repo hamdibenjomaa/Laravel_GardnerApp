@@ -1,11 +1,10 @@
-@extends('jardinier.molka')
+@extends('backOffice.template')
 
 @section('edit')
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
     <div class="col-lg-6 col-md-8 col-sm-12">
 <form action="{{ route('jardinier.update', $jardinier->id) }}" method="POST" class="p-5 bg-light shadow-lg rounded">
     @csrf
-    @method('PUT')
     <h2 class="text-center mb-4">Modifier Jardinier</h2>
     <div class="form-group mb-4">
         <label for="nom">Nom du jardinier</label>

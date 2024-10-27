@@ -57,10 +57,10 @@
                 <a href="{{ route('frontOffice.blogs') }}" class="nav-item nav-link">Blog</a>
                 <a href="{{ route('forms') }}" class="nav-item nav-link">Formation</a>
 
-
+                <a href="{{ route('jardinier.home') }}" class="nav-item nav-link">Jardinier</a>
 
                 <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
-                <a href="# " class="nav-item nav-link">Evenements</a>
+                <a href="{{ route('events.index') }}" class="nav-item nav-link">Events</a>
                 <a href="{{ route('reclamations.add') }}" class="nav-item nav-link">Reclamation</a>
                 <a href="{{ route('frontOffice.contact') }}" class="nav-item nav-link">Contact</a>
             </div>

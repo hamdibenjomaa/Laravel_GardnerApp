@@ -4,10 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Items List</title>
+    <title>Edit Item</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -135,13 +138,7 @@
                                             <i class="ti ti-list-check fs-6"></i>
                                             <p class="mb-0 fs-3">My Task</p>
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-    @csrf
-    <button type="submit" class="btn btn-outline-primary mx-3 mt-2 d-block">
-        Logout
-    </button>
-</form>
-
+                                        <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                     </div>
                                 </div>
                             </li>
@@ -153,55 +150,57 @@
 
             <div class="container-fluid">
                 <div class="container">
-                    <h1>Items List</h1>
+                  
 
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                             
-                                <th>Name</th>
-                                <th>Cost</th>
-                                <th>Provider</th>
-                                <th>Availability</th>
-                                <th>Stock</th>
-                                <th>Photo</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $item)
-                                <tr>
-                           
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->cost }}</td>
-                                    <td>{{ $item->provider->name }}</td>
-                                    <td> {{ $item->availability }} </td>
+                    <h1>Edit Event</h1>
 
-                                       <td>{{$item->stock}} </td>
-                                        <td>
-                                        @if ($item->photo)
-                                            <img src="{{ asset('storage/' . $item->photo) }}" alt="Item Photo" width="50">
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('backOffice.items.edit', $item->id) }}" class="btn btn-warning">Update</a>
-                                        <form action="{{ route('backOffice.items.destroy', $item->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
-                                        </form>
-                                        <a href="{{ route('backOffice.items.history', $item->id) }}" class="btn btn-info">History</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-                    <a href="{{ route('backOffice.items.create') }}" class="btn btn-primary">Add New Item</a>
+<form action="{{ route('events.update', $event->id) }}" method="POST">
+    @csrf
+    @method('PUT')
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Event Title</label>
+        <input type="text" name="title" class="form-control" value="{{ old('title', $event->title) }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" class="form-control" rows="3" required>{{ old('description', $event->description) }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="date" class="form-label">Event Date</label>
+        <input type="date" name="date" class="form-control" value="{{ old('date', $event->date) }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" name="location" class="form-control" value="{{ old('location', $event->location) }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="max_participants" class="form-label">Max Participants</label>
+        <input type="number" name="max_participants" class="form-control" value="{{ old('max_participants', $event->max_participants) }}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Event</button>
+    <a href="{{ route('events.index') }}" class="btn btn-secondary">Cancel</a>
+</form>
+
                 </div>
 
                 <div class="py-6 px-6 text-center fixed-bottom">
@@ -211,13 +210,14 @@
         </div>
     </div>
 
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/sidebarmenu.js"></script>
-    <script src="../assets/js/app.min.js"></script>
-    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
-    <script src="../assets/js/dashboard.js"></script>
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
+<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
+<script src="{{ asset('assets/js/dashboard.js') }}"></script>
+
 </body>
 
 </html>

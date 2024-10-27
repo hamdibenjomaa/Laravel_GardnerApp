@@ -135,13 +135,7 @@
                                             <i class="ti ti-list-check fs-6"></i>
                                             <p class="mb-0 fs-3">My Task</p>
                                         </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-inline">
-    @csrf
-    <button type="submit" class="btn btn-outline-primary mx-3 mt-2 d-block">
-        Logout
-    </button>
-</form>
-
+                                        <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                     </div>
                                 </div>
                             </li>
@@ -152,62 +146,54 @@
             <!--  Header End -->
 
             <div class="container-fluid">
-                <div class="container">
-                    <h1>Items List</h1>
+    <div class="container">
+        <h1>Event List</h1>
 
-                    @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                             
-                                <th>Name</th>
-                                <th>Cost</th>
-                                <th>Provider</th>
-                                <th>Availability</th>
-                                <th>Stock</th>
-                                <th>Photo</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $item)
-                                <tr>
-                           
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->cost }}</td>
-                                    <td>{{ $item->provider->name }}</td>
-                                    <td> {{ $item->availability }} </td>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($events as $event)
+                    <tr>
+                        <td>{{ $event->title }}</td>
+                        <td>{{ \Carbon\Carbon::parse($event->date)->format('Y-m-d') }}</td> <!-- Format date as needed -->
+                        <td>{{ $event->location }}</td>
+                        <td>{{ $event->description }}</td>
+                        
+                        <td>
+    <a href="{{ route('events.edit', $event->id) }}" class="btn btn-warning">Update</a>
+    <a href="{{ route('BackOffice.events.participants', $event->id) }}" class="btn btn-info">Participants</a> <!-- New button -->
+    <form action="{{ route('events.destroy', $event->id) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
+    </form>
+</td>
 
-                                       <td>{{$item->stock}} </td>
-                                        <td>
-                                        @if ($item->photo)
-                                            <img src="{{ asset('storage/' . $item->photo) }}" alt="Item Photo" width="50">
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('backOffice.items.edit', $item->id) }}" class="btn btn-warning">Update</a>
-                                        <form action="{{ route('backOffice.items.destroy', $item->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
-                                        </form>
-                                        <a href="{{ route('backOffice.items.history', $item->id) }}" class="btn btn-info">History</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-                    <a href="{{ route('backOffice.items.create') }}" class="btn btn-primary">Add New Item</a>
-                </div>
+        <a href="{{ route('events.create') }}" class="btn btn-primary">Add New Event</a>
+    </div>
 
-                <div class="py-6 px-6 text-center fixed-bottom">
-                    <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
-                </div>
-            </div>
+    <div class="py-6 px-6 text-center fixed-bottom">
+        <p class="mb-0 fs-4">Design and Developed by TEAM-CODERS</p>
+    </div>
+</div>
+
         </div>
     </div>
 

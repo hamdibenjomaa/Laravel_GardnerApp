@@ -1,4 +1,4 @@
-@extends('jardinier.molka')
+@extends('jardinier.template')
 
 @section('home')
 

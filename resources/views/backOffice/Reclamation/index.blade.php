@@ -73,7 +73,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{route ('BackOffice.events.index')}}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-layout-dashboard"></i>
                             </span>
@@ -86,6 +86,14 @@
                                 <i class="ti ti-layout-dashboard"></i>
                             </span>
                             <span class="hide-menu">reclamation</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('reservation.index') }}"  aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout-dashboard"></i>
+                            </span>
+                            <span class="hide-menu">reservation</span>
                         </a>
                     </li>
                 </ul>

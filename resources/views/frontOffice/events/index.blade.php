@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gardener The Best Gardening Website</title>
+    <title>Gardener - Gardening Website Template</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -14,10 +14,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -28,11 +25,10 @@
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('img/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -41,6 +37,33 @@
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
     </div>
     <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark text-light px-0 py-2">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <span class="fa fa-phone-alt me-2"></span>
+                    <span>+012 345 6789</span>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center">
+                    <span class="far fa-envelope me-2"></span>
+                    <span>info@example.com</span>
+                </div>
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <span>Follow Us:</span>
+                    <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
 
 
     <!-- Navbar Start -->
@@ -53,7 +76,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="/" class="nav-item nav-link active">Home</a>
+                <a href="index.html" class="nav-item nav-link">Home</a>
                 <a href="{{ route('frontOffice.blogs') }}" class="nav-item nav-link">Blog</a>
                 <a href="{{ route('forms') }}" class="nav-item nav-link">Formation</a>
 
@@ -81,12 +104,92 @@
     <!-- Navbar End -->
 
 
-    {{-- @yield('content')  --}}
-    @yield('home') 
-    @yield('jardinier') 
-    @yield('show') 
-    @yield('create') 
-    @yield('edit') 
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-3 text-white mb-4 animated slideInDown">Services</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Services</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+<!-- Event start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-bold text-primary">Nos Événements</p>
+            <h1 class="display-5 mb-5">Événements à Venir</h1>
+        </div>
+        <div class="row g-4">
+            <!-- Inside the foreach loop for displaying events -->
+@foreach($events as $event)
+    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ 0.1 + ($loop->index * 0.2) }}s">
+        <div class="event-item rounded shadow-lg position-relative overflow-hidden" 
+             style="background-image: url('{{ asset('img/events.jpg') }}'); background-size: cover; background-position: center; height: 300px;">
+            <div class="overlay position-absolute w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+            <div class="event-text text-white rounded p-4 position-relative" style="z-index: 1;">
+                <h4 class="mb-3">{{ $event->title }}</h4>
+                <p class="mb-4">{{ Str::limit($event->description, 100) }}</p>
+                <p class="mb-4"><strong>Date:</strong> {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}</p>
+                <p class="mb-4"><strong>Lieu:</strong> {{ $event->location }}</p>
+                
+                <!-- Display available places -->
+                <p class="mb-4"><strong>Places Disponibles:</strong> {{ $event->availablePlaces() }}</p>
+
+                <a class="btn btn-primary btn-sm" href="{{ route('events.show', $event->id) }}">
+                    <i class="fa fa-plus me-2"></i>Voir Plus
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+@endforeach
+
+        </div>
+    </div>
+</div>
+<!-- Event end -->
+
+
+<style>
+    .event-item {
+        position: relative;
+        transition: transform 0.3s, box-shadow 0.3s; /* Animation for hover effect */
+        background-color: #ffffff; /* Fallback color */
+        color: #fff; /* Default text color */
+    }
+
+    .event-item:hover {
+        transform: translateY(-5px); /* Lift effect on hover */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    }
+
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for better text contrast */
+    }
+
+    .event-text h4 {
+        color: #10442c ; /* Title color */
+    }
+
+    .btn-primary {
+        background-color: #10442c; /* Primary button color */
+        
+    }
+
+    .btn-primary:hover {
+        background-color: #10442c; /* Darker shade on hover */
+        border-color: ; /* Darker border on hover */
+    }
+</style>
+
+
 
 
 
@@ -170,7 +273,7 @@
     <script src="lib/lightbox/js/lightbox.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
 </html>
