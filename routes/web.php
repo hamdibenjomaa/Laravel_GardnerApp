@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ParticipationController;
 
 // Route for listing all events
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
@@ -26,7 +27,12 @@ Route::put('/events/{id}', [EventController::class, 'update'])->name('events.upd
 // Route for deleting an event
 Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('events.destroy');
 
-// Default route for the home page
+// Route for participating in an event
+Route::post('/events/{id}/participate', [EventController::class, 'participate'])->name('events.participate');
+Route::get('/Back/events/{id}/participants', [ParticipationController::class, 'showParticipants'])->name('BackOffice.events.participants'); 
+// Route for dynamic search by date
+Route::get('/events/search', [EventController::class, 'searchByDate'])->name('events.search');
+
 Route::get('/', function () {
     return view('welcome');
 });

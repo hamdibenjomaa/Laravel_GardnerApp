@@ -4,10 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Items List</title>
+    <title>Edit Item</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+  
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/styles.min.css') }}" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -128,41 +131,20 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
+        <h1>Participants for {{ $event->title ?? 'Event not found' }}</h1>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($events as $event)
-                    <tr>
-                        <td>{{ $event->title }}</td>
-                        <td>{{ \Carbon\Carbon::parse($event->date)->format('Y-m-d') }}</td> <!-- Format date as needed -->
-                        <td>{{ $event->location }}</td>
-                        <td>{{ $event->description }}</td>
-                        
-                        <td>
-    <a href="{{ route('events.edit', $event->id) }}" class="btn btn-warning">Update</a>
-    <a href="{{ route('BackOffice.events.participants', $event->id) }}" class="btn btn-info">Participants</a> <!-- New button -->
-    <form action="{{ route('events.destroy', $event->id) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?')">Delete</button>
-    </form>
-</td>
+@if($participants->isEmpty())
+    <p>No participants for this event.</p>
+@else
+    <ul>
+        @foreach($participants as $participation)
+            <li>{{ $participation->user->name }} - Status: {{ $participation->statut }}</li>
+        @endforeach
+    </ul>
+@endif
+</div>
 
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
 
-        <a href="{{ route('events.create') }}" class="btn btn-primary">Add New Event</a>
     </div>
 
     <div class="py-6 px-6 text-center fixed-bottom">
@@ -172,14 +154,13 @@
 
         </div>
     </div>
-
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/sidebarmenu.js"></script>
-    <script src="../assets/js/app.min.js"></script>
-    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
-    <script src="../assets/js/dashboard.js"></script>
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
+<script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+<script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
+<script src="{{ asset('assets/js/dashboard.js') }}"></script>
 </body>
 
 </html>

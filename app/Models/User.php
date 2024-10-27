@@ -66,5 +66,9 @@ class User extends Authenticatable
 {
     return $this->hasMany(Event::class);
 }
+public function participations()
+{
+    return $this->hasMany(Participation::class);
+}
 
 }

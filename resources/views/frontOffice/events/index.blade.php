@@ -120,27 +120,44 @@
             <h1 class="display-5 mb-5">Événements à Venir</h1>
         </div>
         <div class="row g-4">
-            @foreach($events as $event)
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ 0.1 + ($loop->index * 0.2) }}s">
-                    <div class="event-item rounded shadow-lg position-relative overflow-hidden" 
-                         style="background-image: url('{{ asset('img/events.jpg') }}'); background-size: cover; background-position: center; height: 300px;">
-                        <div class="overlay position-absolute w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);"></div>
-                        <div class="event-text text-white rounded p-4 position-relative" style="z-index: 1;">
-                            <h4 class="mb-3">{{ $event->title }}</h4>
-                            <p class="mb-4">{{ Str::limit($event->description, 100) }}</p>
-                            <p class="mb-4"><strong>Date:</strong> {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}</p>
-                            <p class="mb-4"><strong>Lieu:</strong> {{ $event->location }}</p>
-                            <a class="btn btn-primary btn-sm" href="{{ route('events.show', $event->id) }}">
-                                <i class="fa fa-plus me-2"></i>Voir Plus
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+            <!-- Inside the foreach loop for displaying events -->
+@foreach($events as $event)
+    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ 0.1 + ($loop->index * 0.2) }}s">
+        <div class="event-item rounded shadow-lg position-relative overflow-hidden" 
+             style="background-image: url('{{ asset('img/events.jpg') }}'); background-size: cover; background-position: center; height: 300px;">
+            <div class="overlay position-absolute w-100 h-100" style="background-color: rgba(0, 0, 0, 0.5);"></div>
+            <div class="event-text text-white rounded p-4 position-relative" style="z-index: 1;">
+                <h4 class="mb-3">{{ $event->title }}</h4>
+                <p class="mb-4">{{ Str::limit($event->description, 100) }}</p>
+                <p class="mb-4"><strong>Date:</strong> {{ \Carbon\Carbon::parse($event->date)->format('d M Y') }}</p>
+                <p class="mb-4"><strong>Lieu:</strong> {{ $event->location }}</p>
+                
+                <!-- Display available places -->
+                <p class="mb-4"><strong>Places Disponibles:</strong> {{ $event->availablePlaces() }}</p>
+
+                <a class="btn btn-primary btn-sm" href="{{ route('events.show', $event->id) }}">
+                    <i class="fa fa-plus me-2"></i>Voir Plus
+                </a>
+
+                <!-- Form for participating in the event -->
+               <!-- <form action="{{ route('events.participate', $event->id) }}" method="POST" style="margin-top: 10px;">
+                    @csrf
+                    <input type="hidden" name="statut" value="inscrit"> --> 
+                <!-- Participation status -->
+                    <button type="submit" class="btn btn-success btn-sm" {{ $event->availablePlaces() <= 0 ? 'disabled' : '' }}>
+                        <i class="fa fa-check me-2"></i>Participer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
+
         </div>
     </div>
 </div>
 <!-- Event end -->
+
 
 <style>
     .event-item {
