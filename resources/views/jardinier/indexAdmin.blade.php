@@ -3,8 +3,21 @@
 @section('jardinier')
     <!-- Add New Jardinier Button -->
     <div class="me-3 my-3 text-end">
-        <a href="{{ route('jardinier.create') }}" class="btn btn-custom-add mb-0">
-            <i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Jardinier
+        <a href="{{ route('jardinier.create') }}">
+            <button class="btn-primary" style="
+    display: flex; 
+    align-items: center; 
+    padding: 10px 15px; 
+    background-color: #211254; /* Green color */
+    color: #ffffff; 
+    border: none; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    font-size: 16px;
+">
+    <i style="margin-right: 8px; font-size: 18px;"></i>Add</button>
         </a>
     </div>
         

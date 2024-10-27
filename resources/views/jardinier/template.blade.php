@@ -58,11 +58,14 @@
                 <a href="{{ route('forms') }}" class="nav-item nav-link">Formation</a>
                 <a href="{{ route('providers.index') }}" class="nav-item nav-link">Nos Partenaires</a>
                 <a href="# " class="nav-item nav-link">Evenements</a>
+                <a href="{{ route('jardinier.home') }}" class="nav-item nav-link">Nos equipes</a>
                 <a href="{{ route('reclamations.add') }}" class="nav-item nav-link">Reclamation</a>
                 <a href="{{ route('frontOffice.contact') }}" class="nav-item nav-link">Contact</a>
 
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">Sign In<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{{ route('login') }}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">
+                Sign In
+            </a>
         </div>
     </nav>
     <!-- Navbar End -->

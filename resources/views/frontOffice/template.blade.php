@@ -84,6 +84,7 @@
     @yield('content') <!-- This is where content from other views will go -->
     @yield('blogs') <!-- This is where content from other views will go -->
     @yield('addBlog') <!-- This is where content from other views will go -->
+    @yield('jardinier') <!-- This is where content from other views will go -->
 
     @yield('contact')
     <!-- Carousel Start -->

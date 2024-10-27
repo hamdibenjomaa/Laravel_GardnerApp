@@ -1,4 +1,4 @@
-@extends('jardinier.molka')
+@extends('backOffice.template')
 
 @section('edit')
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
