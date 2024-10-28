@@ -86,11 +86,19 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{ route('reservation.index') }}"  aria-expanded="false">
-                            <span>
-                                <i class="ti ti-layout-dashboard"></i>
-                            </span>
-                            <span class="hide-menu">reservation</span>
+                        <a class="sidebar-link" href="{{ route('jardinier.indexAdmin') }}" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-users"></i>
+                        </span>
+                            <span class="hide-menu">Equipes</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('reservation.index') }}" aria-expanded="false">
+                        <span>
+                          <i class="ti ti-calendar"></i>
+                        </span>
+                            <span class="hide-menu">Reservations equipes</span>
                         </a>
                     </li>
                 </ul>

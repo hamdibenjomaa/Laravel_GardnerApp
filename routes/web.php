@@ -128,6 +128,27 @@ Route::prefix('')->controller(ReservationController::class)->group(function(){
     Route::delete('reservation/delete/{reservationId}', 'destroy')->name('reservation.destroy');
     Route::get('reservation-show-{reservationId}', 'show')->name('reservation.show');
 });
+// Route::middleware('auth')->prefix('')->controller(JardinierController::class)->group(function(){
+   
+//     Route::get('jardiniers/autocomplete', 'autocomplete')->name('jardinier.autocomplete');
+//     Route::get('jardinier-admin', 'indexAdmin')->name('jardinier.indexAdmin');
+//     Route::get('jardinier-create', 'create')->name('jardinier.create');
+//     Route::post('jardinier-store', 'store')->name('jardinier.store');
+//     Route::get('jardinier-edit-{jardinierId}', 'edit')->name('jardinier.edit');
+//     Route::post('jardinier-update/{jardinierId}','update')->name('jardinier.update');
+//     Route::delete('jardinier-delete/{jardinierId}', 'destroy')->name('jardinier.destroy');
+   
+//     Route::get('jardinier-showadmin-{jardinierId}', 'showAdmin')->name('jardinier.showAdmin');
+// });
+// Route::middleware('auth')->prefix('')->controller(ReservationController::class)->group(function(){
+    
+//     // Route::get('reservation-create', 'create')->name('reservation.create');
+//     // Route::post('reservation/store', 'store')->name('reservation.store');
+//     Route::get('reservation-edit-{reservationId}', 'edit')->name('reservation.edit');
+//     Route::post('reservation-update/{reservationId}','update')->name('reservation.update');
+//     Route::delete('reservation/delete/{reservationId}', 'destroy')->name('reservation.destroy');
+//     Route::get('reservation-show-{reservationId}', 'show')->name('reservation.show');
+// });
 
 
 // hamdi 
